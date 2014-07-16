@@ -2,6 +2,7 @@ package mrcsFelipe.financeiro.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,7 +46,7 @@ public class User implements GrantedAuthority, java.io.Serializable {
     @Column(name = "roles")
     private Role role;
 	
-	@OneToMany(orphanRemoval=true, mappedBy="user")
+	@OneToMany(orphanRemoval=true, mappedBy="user",cascade={CascadeType.MERGE})
 	private List<Account> account;
 	
 	public User() {

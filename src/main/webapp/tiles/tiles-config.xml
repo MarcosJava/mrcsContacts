@@ -9,7 +9,7 @@
 		<put-attribute name="footer" value="/view/templates/footer.jsp"/>
 	</definition>
 	
-    <definition name="/login"  extends="main" >
+    <definition name="login"  extends="main" >
     	<put-attribute name="bodymain" value="/view/index.jsp"/>
     </definition>
     
@@ -22,7 +22,7 @@
     </definition>
  
     
-    <definition name="protected/user/welcomeUser" extends="main">
+    <definition name="user/welcomeUser" extends="main">
     	<put-attribute name="header" value="/view/templates/header.jsp"/>
     	<put-attribute name="bodymain" value="/view/welcomeUser.jsp"/>
     </definition>
@@ -35,24 +35,29 @@
     	<put-attribute name="bodymain" value="/view/contactMeSuccess.jsp" />
     </definition>
        
-    <definition name="protected/user/home" extends="main">
+    <definition name="user/home" extends="main">
     	<put-attribute name="header" value="/view/templates/header.jsp"/>
     	<put-attribute name="bodymain" value="/view/protected/user/home.jsp"/>
     </definition>
     
-    <definition name="protected/user/createAccount" extends="main">
+    <definition name="user/createAccount" extends="main">
     	<put-attribute name="header" value="/view/templates/header.jsp"/>
     	<put-attribute name="bodymain" value="/view/protected/user/createAccount.jsp"/>
     </definition>
     
-    <definition name="protected/user/accounts" extends="main">
+    <definition name="user/accounts" extends="main">
     	<put-attribute name="header" value="/view/templates/header.jsp"/>
     	<put-attribute name="bodymain" value="/view/protected/user/accounts.jsp"/>
     </definition>
     
-    <definition name="protected/user/accounts/update/account" extends="main">
+    <definition name="user/accounts/update/account" extends="main">
     	<put-attribute name="header" value="/view/templates/header.jsp"/>
     	<put-attribute name="bodymain" value="/view/protected/user/updateAccount.jsp"/>
+    </definition>
+    
+    <definition name="user/createRelease" extends="main">
+    	<put-attribute name="header" value="/view/templates/header.jsp"/>
+    	<put-attribute name="bodymain" value="/view/protected/user/createRelease.jsp"/>
     </definition>
     
     

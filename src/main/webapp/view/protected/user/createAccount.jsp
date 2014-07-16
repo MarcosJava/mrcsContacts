@@ -4,7 +4,6 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-
 <br />
 <br />
 <br />
@@ -18,7 +17,7 @@
 		<legend> Criando Conta</legend>
 	${error }
 
-	<form class="form-horizontal" action="createAccount/create" accept-charset="UTF-8" >
+	<form class="form-horizontal" action="createAccount/create" method="post">
 		
 		<div class="form-group">
 			<label for="inputEmail" class="control-label col-xs-2"> Nome

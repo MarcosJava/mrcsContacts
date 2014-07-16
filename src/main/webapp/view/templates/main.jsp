@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR" id="ng-app">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="<c:url value='/resources/css/bootstrap.min.css'  />"
 	rel="stylesheet" />
 <link
@@ -21,7 +22,7 @@
 
 <title><tiles:getAsString name="titles" /></title>
 </head>
-<body  >
+<body ng-app="" ng-controller="MyCtrl" >
 	<div class="container">
 		<tiles:insertAttribute name="header" />
 		<tiles:insertAttribute name="bodymain" />

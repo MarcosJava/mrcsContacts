@@ -2,12 +2,12 @@ package mrcsFelipe.financeiro.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,7 +25,7 @@ public class FinancialRelease {
 	private User user;
 	
 	@ManyToOne
-	@JoinTable(name="account_id")
+	@JoinColumn(name="account_id")
 	private Account account;
 	
 	@Temporal(TemporalType.DATE)

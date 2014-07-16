@@ -1,24 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-
-<sf:form modelAttribute="account" method="post" >
-
-	<sf:input path="description" class="four"/>
-	<sf:input path="name" class="four"/>
-	
-</sf:form>
-
-<sec:authorize access="isAuthenticated()">
+<sec:authorize access="isAuthenticated()"> 
 	
 <div class="bs-example">
 
 
 	<fieldset>
-		<legend> Criando Conta</legend>
-	${error }
+		<legend> Editando a Conta</legend>
 
-	<sf:form class="form-horizontal" action="createAccount/create" >
+	<sf:form class="form-horizontal" action="/financeiro/user/account/update" modelAttribute="account">
 		
 		<div class="form-group">
 			<label for="inputName" class="control-label col-xs-2"> 
@@ -32,7 +24,7 @@
 
 		<div class="form-group">
 			<label for="inputDescription" class="control-label col-xs-2">
-				Descri��o: </label>
+				Descrição: </label>
 			<div class="col-xs-10">
 				<sf:input path="description" class="form-control" id="inputDescription" />
 			</div>
@@ -43,10 +35,22 @@
 		<div class="input-group">
 			<label for="inputAmount" class="control-label col-xs-2">
 				Valor: </label>
-            <sf:input path="description" class="form-control" id="inputAmount" />
-            <span class="input-group-addon">.00</span>
+            <sf:input path="amountStart" class="form-control" id="inputAmount" />
         </div>
-            
+        <br />
+        
+        
+        <div class="form-group">
+			<label for="inputDate" class="control-label col-xs-2"> 
+				Data de Criação
+			 </label>
+			<div class="col-xs-10">	
+				<p class="form-control-static">
+					<sf:input readonly="true" path="dateCreate" 
+					class="form-control" id="inputDate" />
+				</p>
+			</div>
+		</div>	
         
     
 		<br />

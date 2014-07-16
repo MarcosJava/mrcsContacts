@@ -77,7 +77,6 @@
 	</filter-mapping>
 
 
-	<!-- Encoding utility -->
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>

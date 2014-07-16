@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import mrcsFelipe.financeiro.entity.User;
 import mrcsFelipe.financeiro.service.AccountService;
+import mrcsFelipe.financeiro.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -25,6 +26,9 @@ public class HomeController {
 	@Autowired
 	private AccountService accountService;
 	
+	@Autowired
+	private UserService userService;
+	
 	
 	//Redirect
 	@RequestMapping("/")
@@ -33,11 +37,11 @@ public class HomeController {
         //List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(auth.getAuthorities());
 		
 		if (auth.getName().equals("anonymousUser")) {
-			return "/login";
+			return "login";
 		}
 		
         if(!auth.getName().equals(" ") || auth.getName() != null){
-        	return "protected/user/home";
+        	return "user/home";
         }
         
         return null;
@@ -47,13 +51,13 @@ public class HomeController {
 	//Redirect
 	@RequestMapping("/admin")
 	public String redirectAdm(){
-	    return "/protected/admin/home";
+	    return "admin/home";
 	}
 	
 	//Redirect
 	@RequestMapping("/user")
 	public String redirectUser(){
-	    return "protected/user/home";
+	    return "user/home";
 	}
 	
 	@RequestMapping("/logout")
@@ -80,18 +84,49 @@ public class HomeController {
 		return "contactMe";
 	}
 	
+	/*********************************************************************
+	 * 
+	 * ACCOUNT
+	 * 
+	 *********************************************************************/
+	
+	
 	@RequestMapping("/user/createAccount")
 	public String createAccount(){
-		return "protected/user/createAccount";
+		return "user/createAccount";
 	}
 	
 	@RequestMapping(value="/user/accounts", method=RequestMethod.GET)
 	public ModelAndView lstAccount(){
-		ModelAndView mav = new ModelAndView("protected/user/accounts");
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user  = userService.findByEmail(auth.getName());
+		
+		ModelAndView mav = new ModelAndView("user/accounts");
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		modelMap.put("lstAccount", accountService.findAll() );
+		modelMap.put("lstAccount", accountService.findAll(user.getId()) );
 		mav.addAllObjects(modelMap);
 		return mav ;
 	}
+	
+	/*********************************************************************
+	 * 
+	 * RELEASE
+	 * 
+	 *********************************************************************/
+	
+	
+	@RequestMapping(value="user/createRelease")
+	public ModelAndView createRelease(){
+		
+		ModelAndView view = new ModelAndView("user/createRelease");
+		
+		System.out.println("oie");
+		
+		return view;
+	}
+	
+	
+	
 	
 }

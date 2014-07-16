@@ -50,13 +50,13 @@ public class UserController {
 		//Verificando as senhas
 		//Check the passwords
 		if(!confirmPassword.equals(user.getPassword())){
-			resultError.addObject("errors", "Senha e Confimar Senha est„oo errados !");
+			resultError.addObject("errors", "Senha e Confimar Senha est√£o errados !");
 			return resultError;
 		}
 		
 		User compareUser = userService.findByEmail(user.getEmail());
 		if(compareUser != null){
-			resultError.addObject("errors", "Usu·rio j· existe !");
+			resultError.addObject("errors", "Usu√°rio j√° existe !");
 			return resultError;
 		}
 		

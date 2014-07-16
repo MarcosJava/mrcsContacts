@@ -3,20 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-
-
 <br />
 <br />
 <br />
-
 
 <div class="row-fluid" >
-<font color="red"><c:out value="${error }" /></font> 
+<font color="red" size="20px"><c:out value="${error }" /></font> 
 
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Panel heading</div>
+  <div class="panel-heading">Todas as suas contas</div>
 <form ng-app="" ng-controller="MyCtrl">
   <!-- Table -->
   <table class="table">
@@ -37,11 +33,11 @@
     		<fmt:formatDate value="${items.dateCreate }" pattern="dd/MM/yyyy"/>
     	</td>
     	<td>
-    		<a href='<c:url value="accounts/update/${items.id}" />' class="btn btn-primary btn-small"><i class="icon-white icon-pencil"></i> Editar</a>
+    		<a href='<c:url value="/user/accounts/update/${items.id}" />' class="btn btn-primary btn-small"><i class="icon-white icon-pencil"></i> Editar</a>
     	</td>
     	
     	<td>
-    	<button class="btn btn-danger btn-small" ng-click="volta('<c:out value="${items.id}" />')" 
+    	<button class="btn btn-danger btn-small" ng-click="vai(<c:out value="${items.id}" />)" 
     		type="button" data-toggle="modal" data-target="#confirmDelete" data-title="Deletar Conta" 
     		data-message="Você tem certeza que quer deletar essa conta ?">
         		<i class="icon-white icon-trash"></i> Deletar
@@ -56,14 +52,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Delete Parmanently</h4>
+        <h4 class="modal-title">Deletar Permanentemente</h4>
       </div>
       <div class="modal-body">
-        <p>Are you sure about this ?</p>
+        <p>Você tem certeza disso ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <a href="account/delete/{{angle}}"  type="button" class="btn btn-danger" id="confirm">Deletar</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <a href= '<c:url value="/user/account/delete/{{angle}}" />'  type="button" class="btn btn-danger" id="confirm">Deletar</a>
       </div>
     </div>
   </div>

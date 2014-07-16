@@ -29,6 +29,7 @@
 		<spring.security.versao>3.1.3.RELEASE</spring.security.versao>
 		<spring.jpa.version>1.6.1.RELEASE</spring.jpa.version>
 		<hibernate.version>4.1.1.Final</hibernate.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
