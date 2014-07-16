@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+	
+		
+	<!-- Habilitamos o Spring MVC a funcionar baseado em anotações -->
+	<mvc:annotation-driven />
+		
+	<!-- Configura o controlador que retorna recursos estáticos de nossa aplicação 
+		 Será também passado como parametro o parâmetro HTTP de cacheamento
+		 expires-to com prazo de cacheamento de 120 segundos
+	-->
+	<mvc:resources mapping="/resources/**" 
+				   location="/resources/"
+				   cache-period="120"/>  
+	
+	<context:annotation-config />
+    <mvc:default-servlet-handler/>
+    
+    
+     <!-- Login Interceptor -->
+    <mvc:interceptors>
+        <!-- workaround to fix IE8 problem -->
+        <bean id="webContentInterceptor"
+              class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+            <property name="cacheSeconds" value="0"/>
+            <property name="useExpiresHeader" value="true"/>
+            <property name="useCacheControlHeader" value="true"/>
+            <property name="useCacheControlNoStore" value="true"/>
+        </bean>
+    </mvc:interceptors>
+    
+     <!-- i18n -->
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basename" value="WEB-INF/i18n"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.FixedLocaleResolver">
+        <property name="defaultLocale" value="pt"/>
+    </bean>
+    
+     <!-- View Handler -->
+     <mvc:default-servlet-handler/>
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="favorPathExtension" value="true"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="xml" value="text/xml"/>
+                <entry key="json" value="application/json"/>
+                <entry key="html" value="text/html"/>
+                <entry key="less" value="text/html"/>
+            </map>
+        </property>
+        <property name="viewResolvers">
+            <list>
+                <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+                    <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+                </bean>
+                <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="prefix" value="/"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    
+	<!-- O view resolver da aplicação -->
+	<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/tiles/tiles-config.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+	</bean>
+	
+	 
+	 <!-- O view resolver usado em nosso 'Ola Mundo' -->
+	 <!--
+	 	 
+	 <bean id="viewResolver"
+    	class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+        <property name="prefix">
+            <value>/views/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+     -->
+	 
+	<!-- Habilitando upload de arquivos -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="50000000"/>
+	</bean>
+	
+	<!-- Busca componentes do tipo @Controller dentro do pacote abaixo -->
+	<context:component-scan base-package="mrcsFelipe.financeiro.controller"/>
+	<context:component-scan base-package="mrcsFelipe.financeiro.service"/>
+	<context:component-scan base-package="mrcsFelipe.financeiro.vo"/>
+
+
+</beans>
