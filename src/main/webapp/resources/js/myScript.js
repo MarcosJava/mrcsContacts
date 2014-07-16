@@ -33,3 +33,8 @@ var myApp;
 	  $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
 	      $(this).data('form').submit();
 	  });
+	  
+	  
+	  //SelectOne -- Add Release
+	 
+	  
