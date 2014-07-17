@@ -16,9 +16,11 @@
 <script src="<c:url value='/resources/js/angular.js' />"></script>
 <script src="<c:url value='/resources/js/myAngularDeleteAccount.js' />"></script>
 <script src="<c:url value='/resources/js/myScript.js' />"></script>
+<script src="<c:url value='/resources/js/moneyValidation.js' />"></script>
 
 
-
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+<script src="<c:url value='/resources/js/jquery-ui.js' />"></script>
 
 <title><tiles:getAsString name="titles" /></title>
 </head>

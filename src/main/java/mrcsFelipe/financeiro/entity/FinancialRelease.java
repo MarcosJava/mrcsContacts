@@ -37,6 +37,8 @@ public class FinancialRelease {
 	private BigDecimal value;
 	
 	
+	private String typeValue;
+	
 	public FinancialRelease() {
 		// TODO Auto-generated constructor stub
 	}
@@ -100,6 +102,26 @@ public class FinancialRelease {
 	public void setValue(BigDecimal value) {
 		this.value = value;
 	}
+
+
+	public String getTypeValue() {
+		return typeValue;
+	}
+
+
+	public void setTypeValue(String typeValue) {
+		this.typeValue = typeValue;
+	}
+
+
+	@Override
+	public String toString() {
+		return "FinancialRelease [id=" + id + ", dateRelease=" + dateRelease
+				+ ", description=" + description + ", value=" + value
+				+ ", typeValue=" + typeValue + "]";
+	}
+	
+	
 	
 	
 }

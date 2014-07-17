@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <br />
 <br />
@@ -12,77 +11,90 @@
 <sec:authorize access="isAuthenticated()">
 
 	<div class="bs-example">
-
+	
+	
+	<font color="red" size="15px"><c:out value="${error }" /></font> 
+	<font color="red" size="15px"><c:out value="${success }" /></font> 
+	
 
 		<fieldset>
 			<legend> Fazendo um lançamento na conta</legend>
-			${error }
 
-			<form class="form-horizontal" action="createRelease/create"
+			<sf:form class="form-horizontal" action="/financeiro/user/createRelease/create" 
 				method="post">
 
+
+
 				<div class="form-group">
-					<label for="inputAmount" class="control-label col-xs-2">
-						Nome da conta: </label>
+					<label for="inputName" class="control-label col-xs-2">
+						Nome do lançamento: </label>
 					<div class="col-xs-10">
-						<input type="text" class="form-control" id="inputAmount"
-							placeholder="Nome da conta" name="amount">
+						<input type="text" class="form-control" id="inputName"
+							placeholder="Nome da conta" name="name">
 					</div>
 				</div>
 				<br />
-
+				
+				
 
 				<div class="form-group">
-					<label for="inputDescription" class="control-label col-xs-2">
+					<label for="inputAccount" class="control-label col-xs-2">
 						Selecione uma Conta: </label>
 					<div class="col-xs-10">
-						
-						<div class="btn-group form-control">
-							<a class="btn dropdown-toggle btn-select" data-toggle="dropdown"
-								href="#"> Selecione uma Conta<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Item I</a></li>
-								<li><a href="#">Item II</a></li>
-								<li><a href="#">Item III</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Other</a></li>
-							</ul>
-						</div>
+						<select class="selectpicker btn-danger" 
+							name="idAccount" id="inputAccount" >
+							 <optgroup label="Contas">
+								<option>Selecione uma opção</option>
+								<c:forEach items="${accounts }" var="itens">
+									<option value='<c:out value="${itens.id }" />'>
+										 <c:out value="${itens.name} " />
+									</option>
+								</c:forEach>
+							</optgroup>
+						</select>
 					</div>
 				</div>
-				
-				<script type="text/javascript">
-				 $(".dropdown-menu li a").click(function(){
-					  var selText = $(this).text();
-					  $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
-					});
-
-					$("#btnSearch").click(function(){
-						alert($('.btn-select').text());
-					});
-				</script>
 				<br />
-
-
+				
 				<div class="form-group">
 					<label for="inputDescription" class="control-label col-xs-2">
-						Descrição: </label>
+						Motivo: </label>
 					<div class="col-xs-10">
 						<input type="text" class="form-control" id="inputDescription"
 							placeholder="descrição" name="description">
 					</div>
 				</div>
 				<br />
+				
+				
+				<div class="form-group">
+					<label for="inputDescription" class="control-label col-xs-2">
+						Opção : &nbsp;&nbsp;&nbsp;</label>
+					<div class="col-xs-10">
+						
+							<input type="radio" name="option" value="revenue">RECEITA
+								&nbsp;&nbsp;&nbsp;
+							<input type="radio" name="option" value="deposit">DESPESA
+						
+					</div>
+				</div>
+				<br />
+
 
 
 				<div class="input-group">
-					<label for="inputAmount" class="control-label col-xs-2">
-						Valor: </label> <input type="text" class="form-control"
-						placeholder="Valor" id="inputAmount" name="amount"> <span
-						class="input-group-addon">.00</span>
-				</div>
 
+					<label for="inputAmount" class="control-label col-xs-2">
+						Valor: </label> 
+						<input type="text" name="value" id="currency" />
+				</div>
+				<br />
+				
+				<div class="input-group">
+					<label for="inputDate" class="control-label col-xs-2">
+						Data do Lançamento: </label>
+					<input type="text" id="calendario" name="date" />	 
+				</div>
 
 
 				<br /> <br /> <br />
@@ -92,9 +104,7 @@
 						<button type="submit" class="btn btn-primary">Criar</button>
 					</div>
 				</div>
-			</form>
+			</sf:form>
 		</fieldset>
 	</div>
-
-
 </sec:authorize>

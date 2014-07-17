@@ -121,7 +121,12 @@ public class HomeController {
 		
 		ModelAndView view = new ModelAndView("user/createRelease");
 		
-		System.out.println("oie");
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user  = userService.findByEmail(auth.getName());
+		
+		Map<String, Object> modelView = new HashMap<String, Object>();
+		modelView.put("accounts", accountService.findAll(user.getId()));		
+		view.addAllObjects(modelView);
 		
 		return view;
 	}
