@@ -21,7 +21,7 @@ public interface FinancialReleaseRepository extends
 	public List<FinancialRelease> findAllReleaseByUser(@Param("id")Integer idUser);
 	
 	
-	@Query("SELECT fr FROM FinancialRelease fr ORDER BY fr.id")
+	@Query("SELECT fr FROM FinancialRelease fr ORDER BY fr.id DESC")
 	public List<FinancialRelease> findAllReleaseForLimit( Pageable pageable);
 	//public List<FinancialRelease> findAllReleaseForLimit(String query, Pageable pageable);
 	
