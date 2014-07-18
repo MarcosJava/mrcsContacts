@@ -23,6 +23,8 @@
     				 lookup-on-startup="false"
                      proxy-interface="javax.sql.DataSource"/>
 
+	
+
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -33,9 +35,13 @@
         <property name="dataSource" ref="myContactDataSource"/>
         <property name="persistenceUnitName" value="mrcsFinanceiroPU"/>
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
-
     </bean>
-
+	
+	<!-- JPA Template -->
+<!-- 	<bean class="org.springFramework.orm.jpa.LocalEntityManagerFactoryBean"> -->
+<!-- 		<property name="persistenceUnitName" value="mrcsFinanceiroPU" /> -->
+<!-- 	</bean> -->
+	
     <!-- Spring Data -->
     <jpa:repositories base-package="mrcsFelipe.financeiro.repository"
                       entity-manager-factory-ref="entityManagerFactory"

@@ -13,8 +13,8 @@
 	<div class="bs-example">
 	
 	
-	<font color="red" size="15px"><c:out value="${error }" /></font> 
-	<font color="red" size="15px"><c:out value="${success }" /></font> 
+	<font color="red" size="10px"><c:out value="${error }" /></font> 
+	<font color="blue" size="10px"><c:out value="${success }" /></font> 
 	
 
 		<fieldset>
@@ -27,10 +27,12 @@
 
 				<div class="form-group">
 					<label for="inputName" class="control-label col-xs-2">
-						Nome do lançamento: </label>
+						Nome do lançamento: &nbsp;&nbsp;
+						
+					</label>
 					<div class="col-xs-10">
 						<input type="text" class="form-control" id="inputName"
-							placeholder="Nome da conta" name="name">
+							placeholder="Nome da lançamento" name="name">
 					</div>
 				</div>
 				<br />
@@ -39,12 +41,14 @@
 
 				<div class="form-group">
 					<label for="inputAccount" class="control-label col-xs-2">
-						Selecione uma Conta: </label>
+						Selecione uma Conta:* &nbsp;&nbsp;  
+					</label>
+						
 					<div class="col-xs-10">
 						<select class="selectpicker btn-danger" 
 							name="idAccount" id="inputAccount" >
 							 <optgroup label="Contas">
-								<option>Selecione uma opção</option>
+								<option value="">Selecione uma opção</option>
 								<c:forEach items="${accounts }" var="itens">
 									<option value='<c:out value="${itens.id }" />'>
 										 <c:out value="${itens.name} " />
@@ -58,7 +62,7 @@
 				
 				<div class="form-group">
 					<label for="inputDescription" class="control-label col-xs-2">
-						Motivo: </label>
+						Motivo:&nbsp;&nbsp; </label>
 					<div class="col-xs-10">
 						<input type="text" class="form-control" id="inputDescription"
 							placeholder="descrição" name="description">
@@ -69,7 +73,7 @@
 				
 				<div class="form-group">
 					<label for="inputDescription" class="control-label col-xs-2">
-						Opção : &nbsp;&nbsp;&nbsp;</label>
+						Opção :* &nbsp;&nbsp;&nbsp;</label>
 					<div class="col-xs-10">
 						
 							<input type="radio" name="option" value="revenue">RECEITA
@@ -85,14 +89,14 @@
 				<div class="input-group">
 
 					<label for="inputAmount" class="control-label col-xs-2">
-						Valor: </label> 
+						Valor:* &nbsp;&nbsp;</label> 
 						<input type="text" name="value" id="currency" />
 				</div>
 				<br />
 				
 				<div class="input-group">
 					<label for="inputDate" class="control-label col-xs-2">
-						Data do Lançamento: </label>
+						Data do Lançamento:* &nbsp;&nbsp;</label>
 					<input type="text" id="calendario" name="date" />	 
 				</div>
 

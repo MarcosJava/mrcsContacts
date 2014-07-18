@@ -3,8 +3,10 @@ package mrcsFelipe.financeiro.controller;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import mrcsFelipe.financeiro.entity.Account;
@@ -49,11 +51,41 @@ public class FinancialReleaseController {
 		User user  = userService.findByEmail(auth.getName());
 		
 		ModelAndView view = new ModelAndView();
+		Map<String, Object> modelView = new HashMap<String, Object>();
+		modelView.put("accounts", accountService.findAll(user.getId()));
 		String drawOrDebit = "";
 		
 		
 		//Validate
-		// idAccount, option, value, date
+		if(idAccount.trim().equals("") || idAccount == null){
+			System.err.println("Sem Conta");
+			modelView.put("error", "Ocorreu algum erro, informe a sua Conta");
+			view.setViewName("user/createRelease");
+			view.addAllObjects(modelView);
+			return view;
+		}
+		if(option.trim().equals("") || option == null){
+			System.err.println("Sem Opcao");
+			modelView.put("error", "Ocorreu algum erro, informe se é Receita ou Despesa");
+			view.setViewName("user/createRelease");
+			view.addAllObjects(modelView);
+			return view;
+		}
+		if(value.trim().equals("") || value == null){
+			System.err.println("Sem Valor");
+			modelView.put("error", "Ocorreu algum erro, informe o valor a ser depositado");
+			view.setViewName("user/createRelease");
+			view.addAllObjects(modelView);
+			return view;
+		}
+		if(date.trim().equals("") || date == null){
+			System.err.println("Sem Data");
+			modelView.put("error", "Ocorreu algum erro, informe a data do deposito");
+			view.setViewName("user/createRelease");
+			view.addAllObjects(modelView);
+			return view;
+		}
+
 		
 		try {
 			//Format Date
@@ -98,18 +130,14 @@ public class FinancialReleaseController {
 			
 			this.financialReleaseService.save(financialRelease);
 			
-			Map<String, Object> modelView = new HashMap<String, Object>();
-			modelView.put("accounts", accountService.findAll(user.getId()));
 			modelView.put("success", "Sua conta " + account.getName() +
-					" foi " + drawOrDebit + " o valor " + value);
+					" foi " + drawOrDebit + " o valor R$" + value);
 			
 			view.setViewName("user/createRelease");
 			view.addAllObjects(modelView);
 			
 			return view;
 		} catch (Exception e) {
-			Map<String, Object> modelView = new HashMap<String, Object>();
-			modelView.put("accounts", accountService.findAll(user.getId()));
 			modelView.put("error", "Ocorreu algum erro, informe ao suporte no Contact me");
 			
 			view.setViewName("user/createRelease");
@@ -119,6 +147,29 @@ public class FinancialReleaseController {
 		}
 		
 	}
+	
+	@RequestMapping("user/releases/limit/5")
+	public ModelAndView findAllForLimit5(){
+		try {
+			
+			List<FinancialRelease> releases = financialReleaseService.findAllReleaseForLimit(5);
+			
+			ModelAndView view = new ModelAndView("user/releases/limit5");
+			Map<String, Object> maps = new HashMap<String, Object>();
+			maps.put("lstRelease", releases);
+			
+			for (FinancialRelease financialRelease : releases) {
+				System.err.println(financialRelease);
+			}
+			view.addAllObjects(maps);
+			return view;
+			
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+	
 	
 	
 }

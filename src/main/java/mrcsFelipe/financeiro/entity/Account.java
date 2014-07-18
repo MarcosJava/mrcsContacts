@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="account")
@@ -30,6 +31,9 @@ public class Account {
 	
 	@Column(precision = 10, scale = 2)
 	private BigDecimal amountStart;
+	
+	@Transient
+	private BigDecimal total;
 	
 	private boolean favorite;
 	
@@ -97,6 +101,16 @@ public class Account {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+	
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 
 	@Override

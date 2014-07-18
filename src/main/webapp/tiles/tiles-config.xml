@@ -61,4 +61,9 @@
     </definition>
     
     
+    <definition name="user/releases/limit5" extends="main">
+    	<put-attribute name="header" value="/view/templates/header.jsp"/>
+    	<put-attribute name="bodymain" value="/view/protected/user/releasesLimit5.jsp"/>
+    </definition>
+    
 </tiles-definitions>
