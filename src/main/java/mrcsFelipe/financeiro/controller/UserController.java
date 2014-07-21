@@ -36,7 +36,7 @@ public class UserController {
 									 Locale locale) {
 		
 		ModelAndView resultError = new ModelAndView("createUser");
-		ModelAndView resultSuccess = new ModelAndView("protected/user/welcomeUser");
+		ModelAndView resultSuccess = new ModelAndView("successUser");
 		
 		//Utilizando o Hibernate-Validate
 		//Use hibernate validate
@@ -50,7 +50,10 @@ public class UserController {
 		//Verificando as senhas
 		//Check the passwords
 		if(!confirmPassword.equals(user.getPassword())){
-			resultError.addObject("errors", "Senha e Confimar Senha estão errados !");
+			Map<String, Object> model =	new HashMap<String, Object>();
+			model.put("user", user);
+			model.put("errors", "Senha e Confirmar Senha estão errados !");
+			resultError.addAllObjects(model);
 			return resultError;
 		}
 		

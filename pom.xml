@@ -59,7 +59,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.versao}</version>
+		</dependency>
 
 		<!-- Suporte ao Hibernate e JPA -->
 		<dependency>
@@ -278,6 +282,7 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.4</version>
 		</dependency>
+		
 	</dependencies>
 
 	<repositories>

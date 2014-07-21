@@ -44,8 +44,7 @@
 		<div class="input-group">
 			<label for="inputAmount" class="control-label col-xs-2">
 				Valor: </label>
-            <input type="text" class="form-control" placeholder="Valor" id="inputAmount" name="amount">
-            <span class="input-group-addon">.00</span>
+            <input type="text" class="form-control" placeholder="Valor" id="currency" name="amount"/>
         </div>
             
         

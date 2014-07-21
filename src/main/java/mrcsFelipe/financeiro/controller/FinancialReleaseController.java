@@ -3,7 +3,6 @@ package mrcsFelipe.financeiro.controller;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +20,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,6 +37,15 @@ public class FinancialReleaseController {
 	
 	@Autowired
 	private FinancialReleaseService financialReleaseService;
+	
+	private String message = "";
+	
+	
+	/**
+	 * 
+	 *CREATE
+	 */
+	
 	
 	@RequestMapping(value="user/createRelease/create", method={RequestMethod.POST})
 	public ModelAndView createRelease(String name,
@@ -119,6 +128,7 @@ public class FinancialReleaseController {
 			financialRelease.setValue(big);
 			financialRelease.setDescription(description);
 			financialRelease.setTypeValue(option);
+			financialRelease.setName(name);
 			
 			
 			//Setting view with modelandView
@@ -148,19 +158,56 @@ public class FinancialReleaseController {
 		
 	}
 	
+	/**
+	 * 
+	 *DELETE
+	 */
+	
+	
+	@RequestMapping("user/release/delete/{id}")
+	public ModelAndView deleteRelease(@PathVariable("id")Integer id ){
+		
+		financialReleaseService.deleteById(id);
+		this.message = "Lançamento deletado com Sucesso";
+		return findAllForLimit5();
+	}
+	
+	
+	
+	/**
+	 * 
+	 *Limit 5
+	 */
+	
+	
 	@RequestMapping("user/releases/limit/5")
 	public ModelAndView findAllForLimit5(){
 		try {
 			
-			List<FinancialRelease> releases = financialReleaseService.findAllReleaseForLimit(5);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			List<FinancialRelease> releases = 
+					financialReleaseService.findAllReleaseForLimit(auth.getName().trim(),5);
+			
+		
+			BigDecimal total = new BigDecimal(0);
+			
+			for (FinancialRelease financialRelease : releases) {
+				total = total.add(financialRelease.getValue());	
+				System.err.println("VALOR  == " + financialRelease.getValue());
+				System.err.println("VALOR TOTAL BIG == " + total);
+			}
+			
+			
 			
 			ModelAndView view = new ModelAndView("user/releases/limit5");
 			Map<String, Object> maps = new HashMap<String, Object>();
 			maps.put("lstRelease", releases);
+			maps.put("total", total);
+			maps.put("success", message);
 			
-			for (FinancialRelease financialRelease : releases) {
-				System.err.println(financialRelease);
-			}
+			
+			message = " ";
+			
 			view.addAllObjects(maps);
 			return view;
 			
@@ -171,5 +218,26 @@ public class FinancialReleaseController {
 	}
 	
 	
+	/**
+	 * 
+	 * O maior lancamento
+	 */
+	
+	@RequestMapping("user/releases/maximumRelease")
+	public ModelAndView maximumRelease(){
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		FinancialRelease release = this.financialReleaseService.maxRelease(auth.getName().trim());
+		
+		ModelAndView view = new ModelAndView();
+		view.setViewName("user/releases/maximum");
+		
+		Map<String, Object> maps = new HashMap<String, Object>();
+		maps.put("release", release);
+		
+		view.addAllObjects(maps);
+		
+		return view;
+	}
 	
 }

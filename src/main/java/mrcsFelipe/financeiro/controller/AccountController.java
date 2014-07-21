@@ -51,6 +51,9 @@ public class AccountController {
 									  @RequestParam("description")String description,
 									  @RequestParam("amount")String amount){
 		
+		//Retirando os pontos e virgulas do dinheiro
+		String valuePart = amount.replace(".", "");
+		valuePart = valuePart.replace(",", ".");
 		
 		
 		ModelAndView mavError = new ModelAndView("user/createAccount");
@@ -74,7 +77,7 @@ public class AccountController {
 		user = userService.findByEmail(auth.getName());
 		account.setUser(user);
 		account.setDateCreate(new Date());
-		account.setAmountStart(new BigDecimal(amount));
+		account.setAmountStart(new BigDecimal(valuePart));
 		account.setDescription(description);
 		account.setName(name);
 		account.setFavorite(false);

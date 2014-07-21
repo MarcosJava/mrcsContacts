@@ -14,6 +14,7 @@ encoding//src/main/webapp/view/index.jsp=UTF-8
 encoding//src/main/webapp/view/protected/admin/home.jsp=UTF-8
 encoding//src/main/webapp/view/protected/user/createAccount.jsp=UTF-8
 encoding//src/main/webapp/view/protected/user/home.jsp=UTF-8
+encoding//src/main/webapp/view/protected/user/maximumRelease.jsp=UTF-8
 encoding//src/main/webapp/view/protected/user/updateAccount.jsp=UTF-8
 encoding//src/main/webapp/view/successUser.jsp=UTF-8
 encoding//src/main/webapp/view/templates/footer.jsp=UTF-8

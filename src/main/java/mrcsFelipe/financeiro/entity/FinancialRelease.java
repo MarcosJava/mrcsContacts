@@ -28,6 +28,8 @@ public class FinancialRelease {
 	@JoinColumn(name="account_id")
 	private Account account;
 	
+	private String name;
+	
 	@Temporal(TemporalType.DATE)
 	private Date dateRelease;
 	
@@ -111,6 +113,17 @@ public class FinancialRelease {
 
 	public void setTypeValue(String typeValue) {
 		this.typeValue = typeValue;
+	}
+
+	
+	
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 

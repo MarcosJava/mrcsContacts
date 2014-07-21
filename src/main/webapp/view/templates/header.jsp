@@ -24,8 +24,8 @@
 				<ul class="dropdown-menu">
 					<li> <a href='<c:url value="/user/createRelease" />'> Criar Lançamento </a> </li>
 					<li class="divider"></li>
-					<li><a href="/financeiro/user/releases/limit/5">Ultimos 5 lançamentos</a></li>
-					<li><a href="#">Maior lançamento</a></li>
+					<li><a href='<c:url value="/user/releases/limit/5" />'> Ultimos 5 lançamentos</a></li>
+					<li><a href='<c:url value="/user/releases/maximumRelease" />'>Maior lançamento</a></li>
 					<li><a href="#">Menor lançamento</a></li>
 					<li><a href="#">Consultar por data</a></li>
 				</ul>

@@ -26,9 +26,12 @@
     </tr>
     <c:forEach var="items" items="${lstAccount }">
     <tr>
-    	<td>${items.name}</td>
-    	<td>${items.description}</td>
-    	<td>${items.amountStart}</td>
+    	<td><c:out value="${items.name}" /></td>
+    	<td><c:out value="${items.description}" /></td>
+    	<td><fmt:formatNumber currencySymbol="R$" 
+    							  maxFractionDigits="2" 
+    							  type="currency" 
+    							  value="${items.amountStart}" /> </td>
     	<td>
     		<fmt:formatDate value="${items.dateCreate }" pattern="dd/MM/yyyy"/>
     	</td>

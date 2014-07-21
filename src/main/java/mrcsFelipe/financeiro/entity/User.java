@@ -37,7 +37,7 @@ public class User implements GrantedAuthority, java.io.Serializable {
 	@NotNull @NotEmpty
 	private String name;
 
-	@NotNull @NotEmpty @Size(min=6)
+	@NotNull @NotEmpty @Size(min=6,message="A senha tem que ter no minimo 6 caracteres")
 	private String password;
 	
 	private boolean enabled;

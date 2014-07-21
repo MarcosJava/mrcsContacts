@@ -25,7 +25,16 @@ public class FinancialReleaseService {
 	public void save(FinancialRelease release){
 		this.financialReleaseRepository.save(release);
 	}
-	public List<FinancialRelease> findAllReleaseForLimit(int limit){
-		return financialReleaseRepository.findAllReleaseForLimit(new PageRequest(0, limit));
+	
+	public List<FinancialRelease> findAllReleaseForLimit(String email, int limit){
+		return financialReleaseRepository.findAllReleaseForLimit(email, new PageRequest(0, limit));
+	}
+	
+	public void deleteById(Integer id){
+		financialReleaseRepository.delete(id);
+	}
+	
+	public FinancialRelease maxRelease(String email){
+		return financialReleaseRepository.greatRelease(email);
 	}
 }

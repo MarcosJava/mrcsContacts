@@ -79,6 +79,13 @@ public class HomeController {
 		return "createUser";
 	}
 	
+	@RequestMapping("/createUser/success")
+	public String registrarSuccess() {
+		Map<String, Object> model = new HashMap<String, Object>();
+		model.put("user", new User());
+		return "createUser/success";
+	}
+	
 	@RequestMapping("/contactMe")
 	public String contactMe(){
 		return "contactMe";
