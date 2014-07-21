@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
 encoding//src/main/java/mrcsFelipe/financeiro/utils/AutenticaUsuario.java=UTF-8
 encoding//src/main/java/mrcsFelipe/financeiro/utils/GMail.java=UTF-8
+encoding//src/main/resources=UTF-8
 encoding//src/main/webapp=UTF-8
 encoding//src/main/webapp/WEB-INF/i18n_pt.properties=UTF-8
 encoding//src/main/webapp/WEB-INF/log4j.properties=UTF-8

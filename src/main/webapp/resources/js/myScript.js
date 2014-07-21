@@ -38,7 +38,11 @@ var myApp;
 	  //converter grana
 	  $(function converte() {
 		    $("#currency").maskMoney(
-		    	    {prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
+		    	    {prefix:'R$ ',
+		    	    allowNegative: true,
+		    	    thousands:'.',
+		    	    decimal:',',
+		    	    affixesStay: false});
 	  });
 	  
 	  
