@@ -16,7 +16,7 @@
 	<div class="bs-example">
 		<fieldset>
 			<legend> Consultando por Data</legend>
-			<form class="form-horizontal" action='<c:url value="user/releases/dateForDate"/>'
+			<form class="form-horizontal" action='<c:url value="/user/releases/dateForDate/retrieve"/>'
 				method="post">
 
 				<div class="input-group">
@@ -35,7 +35,7 @@
 
 				<div class="form-group">
 					<div class="col-xs-offset-2 col-xs-10">
-						<button type="submit" class="btn btn-primary">Criar</button>
+						<button type="submit" class="btn btn-primary">Consultar</button>
 					</div>
 				</div>
 			</form>
@@ -44,8 +44,6 @@
 	
 	
 	<br />
-<br />
-<br />
 
 <div class="row-fluid" >
 <div class="panel panel-default">

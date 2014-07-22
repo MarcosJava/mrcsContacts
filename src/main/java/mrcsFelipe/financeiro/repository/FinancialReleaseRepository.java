@@ -1,5 +1,7 @@
 package mrcsFelipe.financeiro.repository;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import mrcsFelipe.financeiro.entity.FinancialRelease;
@@ -36,6 +38,22 @@ public interface FinancialReleaseRepository extends
 			+ "WHERE value=(select min(f.value) from FinancialRelease f WHERE f.user.email=:email) ")
 	public FinancialRelease minRelease(@Param("email") String email);
 	
+	@Query("FROM FinancialRelease f "
+			+ "WHERE  f.dateRelease "
+			+ "BETWEEN :dateFirst AND :dateSecond"
+			+ " AND f.user.email=:email"
+			+ " ORDER BY f.dateRelease ASC")
+	public List<FinancialRelease> findAllReleaseBetweenDate(@Param("dateFirst")Date dateFirst, 
+															@Param("dateSecond")Date dateSecond,
+															@Param("email")String email);
 	
 	
+	
+	@Query("SELECT SUM(f.value) FROM FinancialRelease f "
+			+ "WHERE  f.dateRelease "
+			+ "BETWEEN :dateFirst AND :dateSecond"
+			+ " AND f.user.email=:email")
+	public BigDecimal findTotalBetweenDate(@Param("dateFirst")Date dateFirst, 
+										   @Param("dateSecond")Date dateSecond,
+										   @Param("email")String email);
 }

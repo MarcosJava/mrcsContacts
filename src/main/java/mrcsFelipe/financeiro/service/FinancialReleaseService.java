@@ -1,5 +1,7 @@
 package mrcsFelipe.financeiro.service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import mrcsFelipe.financeiro.entity.FinancialRelease;
@@ -40,5 +42,13 @@ public class FinancialReleaseService {
 	
 	public FinancialRelease minRelease(String email){
 		return financialReleaseRepository.minRelease(email);
+	}
+	
+	public List<FinancialRelease> findAllReleaseBetweenDate(Date one, Date two, String email){
+		return financialReleaseRepository.findAllReleaseBetweenDate(one, two, email);
+	}
+	
+	public BigDecimal findTotalBetweenDate(Date one, Date two, String email){
+		return financialReleaseRepository.findTotalBetweenDate(one, two, email);
 	}
 }

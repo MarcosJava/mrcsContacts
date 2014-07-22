@@ -9,7 +9,7 @@
 <div class="container">
 		<ul class="nav nav-pills">
 			<li class="active"><a href='<c:url value="/" />'>Home</a></li>
-			<li><a href="#">Perfil</a></li>
+			<li><a href='<c:url value="/user/perfil"/>' >Perfil</a></li>
 			
 			<li class="dropdown"><a href="#" data-toggle="dropdown"
 				class="dropdown-toggle">Conta <b class="caret"></b></a>

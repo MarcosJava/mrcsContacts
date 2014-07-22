@@ -138,7 +138,15 @@ public class HomeController {
 		return view;
 	}
 	
-	
+	/*********************************************************************
+	 * 
+	 * Perfil
+	 * 
+	 *********************************************************************/
+	@RequestMapping("user/perfil")
+	public String perfil(){
+		return "user/perfil";
+	}
 	
 	
 }

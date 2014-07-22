@@ -40,6 +40,11 @@
     	<put-attribute name="bodymain" value="/view/protected/user/home.jsp"/>
     </definition>
     
+    <definition name="user/perfil" extends="main">
+    	<put-attribute name="header" value="/view/templates/header.jsp" />
+    	<put-attribute name="bodymain" value="/view/protected/user/perfil.jsp"/>
+    </definition>
+    
     <definition name="user/createAccount" extends="main">
     	<put-attribute name="header" value="/view/templates/header.jsp"/>
     	<put-attribute name="bodymain" value="/view/protected/user/createAccount.jsp"/>

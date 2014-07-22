@@ -2,6 +2,7 @@ package mrcsFelipe.financeiro.controller;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Scope("request")
@@ -40,7 +42,7 @@ public class FinancialReleaseController {
 	private FinancialReleaseService financialReleaseService;
 	
 	private String message = "";
-	
+	BigDecimal total = new BigDecimal(0);
 	private List<FinancialRelease> releases;
 	
 	/**
@@ -191,7 +193,7 @@ public class FinancialReleaseController {
 					financialReleaseService.findAllReleaseForLimit(auth.getName().trim(),5);
 			
 		
-			BigDecimal total = new BigDecimal(0);
+			
 			
 			for (FinancialRelease financialRelease : releases) {
 				total = total.add(financialRelease.getValue());	
@@ -249,12 +251,14 @@ public class FinancialReleaseController {
 	 */
 	@RequestMapping("user/releases/minimumRelease")
 	public ModelAndView minimoRelease(){
-		
+		System.err.println("AKI");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		FinancialRelease release = this.financialReleaseService.minRelease(auth.getName().trim());
 		
 		ModelAndView view = new ModelAndView();
 		view.setViewName("user/releases/minimum");
+		
+		System.err.println("Aloha !");
 		
 		Map<String, Object> maps = new HashMap<String, Object>();
 		maps.put("release", release);
@@ -286,6 +290,42 @@ public class FinancialReleaseController {
 		return view;
 	}
 	
+	
+	@RequestMapping(value="user/releases/dateForDate/retrieve", method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView retrieveDateForDateWithConsult(@RequestParam("dateFirst")String dateOne,
+													   @RequestParam("dateSecond") String dateTwo) throws ParseException{
+	
+		
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		Date dateFirst = df.parse(dateOne);
+		
+		Date dateSecond = df.parse(dateTwo);
+		
+		System.err.println("Date One =" + dateFirst);
+		System.err.println("Date Two =" + dateSecond);
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		releases = this.financialReleaseService.findAllReleaseBetweenDate(dateFirst, dateSecond, auth.getName().trim());
+		total = this.financialReleaseService.findTotalBetweenDate(dateFirst, dateSecond, auth.getName().trim());
+		
+		for (FinancialRelease financialRelease : releases) {
+			System.err.println(financialRelease.getName());
+			
+		}
+		
+		ModelAndView view = new ModelAndView("user/releases/dateForDate");
+		
+		
+		Map<String, Object> maps = new HashMap<String, Object>();
+		maps.put("releases", releases);
+		maps.put("total", total);
+		
+		view.addAllObjects(maps);
+		
+		return view; 
+		
+	}
 	
 	
 	
