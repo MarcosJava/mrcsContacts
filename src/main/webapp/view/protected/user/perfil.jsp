@@ -1,17 +1,27 @@
-<h2>PERFIL</h2>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<img src="../../../resources/img/125x125.jpg"  /> <br />
+<h2> <font color="gray">Perfil</font></h2>
+
+<img style="width:128px; height:128px;" src='<c:url value="/user/avatar"/>'/> <br />
+
+<sf:form action="/financeiro/user/avatar/create" enctype="multipart/form-data">
+	<label for="avatar">Mude seu avatar:</label>
+	<input type="file" name="avatar"/>
+	
+	<input type="submit" value="Envie" class="bnt"/>
+</sf:form>
  
-<p> Seu nome : Fulando </p> 
+ 
+<p> Seu nome : ${user.name } </p> 
  
  Suas contas :<br/>
-	 -Bradesco<br />
-	 	-- inicio : R$ 300,00<br />
-	 	-- total : R$ 5.000,30<br />
-	 -Panamericando<br />
-	 	-- inicio : R$ 500,00<br />
-	 	-- total: R$ 100,00<br />
-
+ 	<c:forEach var="account" items="${accounts }">
+	 -${account.name }<br />
+	 	-- inicio : <fmt:formatNumber value="${account.amountStart}" currencySymbol="R$" type="currency" /> <br />
+	 	-- total : <c:url value="/user/totalAccount/<c:out value='${account.id }' />"/><br />
+	</c:forEach>
 <br />
 	<p> Total de todas as contas inicio: R$ 800,00</p>
  <p>Total de todos as contas no total: R$ 5.100,30</p>

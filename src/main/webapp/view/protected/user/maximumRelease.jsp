@@ -3,6 +3,7 @@
 
 <h2> <font color="gray">O maior lançamento : </font></h2>
 
+<c:forEach var="release" items="${releases }">
 <div class="panel panel-primary">
 <ul class="list-group">
   
@@ -36,3 +37,5 @@
 </ul>
 
 </div>
+</c:forEach>
+<p style="color:red;">Obs: caso aparecer mais de 1, deu empate =]</p>

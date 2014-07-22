@@ -1,5 +1,9 @@
 package mrcsFelipe.financeiro.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -13,11 +17,16 @@ import mrcsFelipe.financeiro.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -72,4 +81,74 @@ public class UserController {
 		resultSuccess.addObject("success", "Cadastrado com sucesso !");
 		return resultSuccess;
 	}
+	
+	
+	/*
+	 * RESGATANDO IMAGEM
+	 */
+	
+	@RequestMapping("/user/avatar")
+	@ResponseBody
+	public byte[] avatar() throws IOException {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		File arquivo = new File("/home/marcos/financeiro/avatar/"+auth.getName().trim()+".png");
+		
+		if (! arquivo.exists()) {
+			
+			arquivo = new File("/home/marcos/financeiro/avatar/125x125.jpg");
+		}
+		
+		byte[] resultado = new byte[(int)arquivo.length()];
+		FileInputStream input = new FileInputStream(arquivo);
+		input.read(resultado);
+		input.close();
+		
+		return resultado;
+	}
+	
+	
+	/**
+	 * 
+	 * CREATING IMAGEM
+	 * 
+	 */
+	
+	@RequestMapping("/user/avatar/create")
+	private String createAvatar(@RequestParam("avatar")MultipartFile avatar) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		File dir = new File("/home/marcos/financeiro/avatar/");
+		if (! dir.exists()) {
+			dir.mkdirs();
+		}
+			try {
+				FileOutputStream arquivo = new FileOutputStream(
+						dir.getAbsolutePath() + "/" + auth.getName().trim() + ".png");
+				arquivo.write(avatar.getBytes());
+				arquivo.close();
+			} catch (IOException ex) {
+				
+			}
+		return "user/perfil";
+	}
+	
+	
+	
+	/***
+	 * 
+	 * Total de cada conta
+	 * 
+	 */
+	@RequestMapping("/user/totalAccount/{id}")
+	@ResponseBody
+	public Integer totalAccount(@PathVariable("id")String id){
+		
+		Integer i = Integer.parseInt(id);
+		
+		return i;
+	}
+	
 }

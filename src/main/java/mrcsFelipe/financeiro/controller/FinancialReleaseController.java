@@ -231,13 +231,13 @@ public class FinancialReleaseController {
 	public ModelAndView maximumRelease(){
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		FinancialRelease release = this.financialReleaseService.maxRelease(auth.getName().trim());
+		releases = this.financialReleaseService.maxRelease(auth.getName().trim());
 		
 		ModelAndView view = new ModelAndView();
 		view.setViewName("user/releases/maximum");
 		
 		Map<String, Object> maps = new HashMap<String, Object>();
-		maps.put("release", release);
+		maps.put("releases", releases);
 		
 		view.addAllObjects(maps);
 		
@@ -253,7 +253,7 @@ public class FinancialReleaseController {
 	public ModelAndView minimoRelease(){
 		System.err.println("AKI");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		FinancialRelease release = this.financialReleaseService.minRelease(auth.getName().trim());
+		releases = this.financialReleaseService.minRelease(auth.getName().trim());
 		
 		ModelAndView view = new ModelAndView();
 		view.setViewName("user/releases/minimum");
@@ -261,7 +261,7 @@ public class FinancialReleaseController {
 		System.err.println("Aloha !");
 		
 		Map<String, Object> maps = new HashMap<String, Object>();
-		maps.put("release", release);
+		maps.put("releases", releases);
 		
 		view.addAllObjects(maps);
 		

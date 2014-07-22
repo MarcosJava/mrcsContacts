@@ -36,11 +36,11 @@ public class FinancialReleaseService {
 		financialReleaseRepository.delete(id);
 	}
 	
-	public FinancialRelease maxRelease(String email){
+	public List<FinancialRelease> maxRelease(String email){
 		return financialReleaseRepository.greatRelease(email);
 	}
 	
-	public FinancialRelease minRelease(String email){
+	public List<FinancialRelease> minRelease(String email){
 		return financialReleaseRepository.minRelease(email);
 	}
 	

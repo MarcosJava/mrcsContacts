@@ -1,12 +1,16 @@
 package mrcsFelipe.financeiro.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import mrcsFelipe.financeiro.entity.Account;
+import mrcsFelipe.financeiro.entity.FinancialRelease;
 import mrcsFelipe.financeiro.entity.User;
 import mrcsFelipe.financeiro.service.AccountService;
+import mrcsFelipe.financeiro.service.FinancialReleaseService;
 import mrcsFelipe.financeiro.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,8 @@ public class HomeController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private FinancialReleaseService financialReleaseService;
 	
 	//Redirect
 	@RequestMapping("/")
@@ -144,9 +150,25 @@ public class HomeController {
 	 * 
 	 *********************************************************************/
 	@RequestMapping("user/perfil")
-	public String perfil(){
-		return "user/perfil";
+	public ModelAndView perfil(){
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		User user = this.userService.findByEmail(auth.getName());
+		List<Account> accounts = this.accountService.findAll(user.getId());
+		List<FinancialRelease> releases = this.financialReleaseService.findAllReleaseByUser(user.getId());
+		
+		ModelAndView view = new ModelAndView("user/perfil");
+		Map<String, Object> maps = new HashMap<String, Object>();
+		maps.put("user", user);
+		maps.put("accounts", accounts );
+		maps.put("releases",releases );
+		
+		view.addAllObjects(maps);
+		return view;
 	}
+	
+	
 	
 	
 }

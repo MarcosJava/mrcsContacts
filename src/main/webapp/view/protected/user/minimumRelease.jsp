@@ -3,6 +3,7 @@
 
 <h2> <font color="gray">O menor lançamento : </font></h2>
 
+<c:forEach items="${releases }" var="release">
 <div class="panel panel-primary">
 <ul class="list-group">
   
@@ -34,5 +35,8 @@
   	<font color="blue"> <c:out value="${release.account.name}" /> </font>
   </li>
 </ul>
-
+<hr />
 </div>
+</c:forEach>
+
+<p style="color:red;">Obs: caso aparecer mais de 1, deu empate =]</p>
