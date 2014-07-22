@@ -31,4 +31,11 @@ public interface FinancialReleaseRepository extends
 			+ "WHERE value=(select max(f.value) from FinancialRelease f WHERE f.user.email=:email) ")
 	public FinancialRelease greatRelease(@Param("email") String email);
 	
+	
+	@Query("FROM FinancialRelease "
+			+ "WHERE value=(select min(f.value) from FinancialRelease f WHERE f.user.email=:email) ")
+	public FinancialRelease minRelease(@Param("email") String email);
+	
+	
+	
 }

@@ -3,6 +3,7 @@ package mrcsFelipe.financeiro.controller;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,7 @@ public class FinancialReleaseController {
 	
 	private String message = "";
 	
+	private List<FinancialRelease> releases;
 	
 	/**
 	 * 
@@ -239,5 +241,56 @@ public class FinancialReleaseController {
 		
 		return view;
 	}
+	
+	
+	/**
+	 * 
+	 * O menor lancamento
+	 */
+	@RequestMapping("user/releases/minimumRelease")
+	public ModelAndView minimoRelease(){
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		FinancialRelease release = this.financialReleaseService.minRelease(auth.getName().trim());
+		
+		ModelAndView view = new ModelAndView();
+		view.setViewName("user/releases/minimum");
+		
+		Map<String, Object> maps = new HashMap<String, Object>();
+		maps.put("release", release);
+		
+		view.addAllObjects(maps);
+		
+		return view;
+		
+	}
+	
+	/**
+	 * 
+	 * Consultando por data
+	 */
+	
+	@RequestMapping(value="user/releases/dateForDate", method={RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET})
+	public ModelAndView retrieveDateForDate(
+			){
+		
+		
+		ModelAndView view = new ModelAndView("user/releases/dateForDate");
+		
+		Map<String, Object> maps = new HashMap<String, Object>();
+		releases = new ArrayList<FinancialRelease>();
+		maps.put("releases", releases);
+		
+		view.addAllObjects(maps);
+		
+		return view;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

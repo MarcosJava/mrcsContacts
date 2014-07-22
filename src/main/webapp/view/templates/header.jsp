@@ -26,8 +26,8 @@
 					<li class="divider"></li>
 					<li><a href='<c:url value="/user/releases/limit/5" />'> Ultimos 5 lançamentos</a></li>
 					<li><a href='<c:url value="/user/releases/maximumRelease" />'>Maior lançamento</a></li>
-					<li><a href="#">Menor lançamento</a></li>
-					<li><a href="#">Consultar por data</a></li>
+					<li><a href='<c:url value="/user/releases/minimumRelease" />'>Menor lançamento</a></li>
+					<li><a href='<c:url value="/user/releases/dateForDate" /> '>Consultar por data</a></li>
 				</ul>
 			</li>
 			<li class="dropdown pull-right"> <a href='<c:url value="/logout" />'>Sair</a> </li>

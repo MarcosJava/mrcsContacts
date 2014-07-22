@@ -71,4 +71,16 @@
     	<put-attribute name="bodymain" value="/view/protected/user/maximumRelease.jsp"/>
     </definition>
     
+    <definition name="user/releases/minimum" extends="main">
+    	<put-attribute name="header" value="/view/templates/header.jsp"/>
+    	<put-attribute name="bodymain" value="/view/protected/user/minimumRelease.jsp"/>
+    </definition>
+    
+    
+    <definition name="user/releases/dateForDate" extends="main">
+    	<put-attribute name="header" value="/view/templates/header.jsp"/>
+    	<put-attribute name="bodymain" value="/view/protected/user/releaseForDate.jsp"/>
+    </definition>
+    
+    
 </tiles-definitions>

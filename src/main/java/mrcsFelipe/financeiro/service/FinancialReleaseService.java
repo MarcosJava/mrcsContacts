@@ -37,4 +37,8 @@ public class FinancialReleaseService {
 	public FinancialRelease maxRelease(String email){
 		return financialReleaseRepository.greatRelease(email);
 	}
+	
+	public FinancialRelease minRelease(String email){
+		return financialReleaseRepository.minRelease(email);
+	}
 }

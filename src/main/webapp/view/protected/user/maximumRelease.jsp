@@ -17,7 +17,7 @@
   </li>
   
   <li class="list-group-item"> 
-  	<font color="green"><b>Descrição :</b>  </font>
+  	<font color="green"><b>Valor :</b>  </font>
   	<font color="blue">	<fmt:formatNumber currencySymbol="R$" 
   										  maxFractionDigits="2" 
   										  type="currency" 
