@@ -2,6 +2,7 @@ package mrcsFelipe.financeiro.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,6 +42,9 @@ public class Account {
 	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="system_user_id")
 	private User user;
+	
+	@OneToMany(mappedBy="account", orphanRemoval=true ,cascade={CascadeType.MERGE})
+	private List<FinancialRelease> financialRelease;
 	
 	public Account() {
 		
@@ -111,6 +116,15 @@ public class Account {
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
+	}
+	
+
+	public List<FinancialRelease> getFinancialRelease() {
+		return financialRelease;
+	}
+
+	public void setFinancialRelease(List<FinancialRelease> financialRelease) {
+		this.financialRelease = financialRelease;
 	}
 
 	@Override

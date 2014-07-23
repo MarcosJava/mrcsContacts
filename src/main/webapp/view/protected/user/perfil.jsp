@@ -20,11 +20,11 @@
  	<c:forEach var="account" items="${accounts }">
 	 -${account.name }<br />
 	 	-- inicio : <fmt:formatNumber value="${account.amountStart}" currencySymbol="R$" type="currency" /> <br />
-	 	-- total : <c:url value="/user/totalAccount/<c:out value='${account.id }' />"/><br />
+	 	-- total : <fmt:formatNumber value="${account.total}" currencySymbol="R$" type="currency" /> <br />
 	</c:forEach>
 <br />
-	<p> Total de todas as contas inicio: R$ 800,00</p>
- <p>Total de todos as contas no total: R$ 5.100,30</p>
+ <p> Total de todas as contas inicio: <fmt:formatNumber value="${totalStartAmount}" currencySymbol="R$" type="currency" /></p>
+ <p>Total de todas as contas no total: R$ 5.100,30</p>
  
  <a href="#">alterar senha</a>
  

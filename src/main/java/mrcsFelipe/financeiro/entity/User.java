@@ -49,6 +49,9 @@ public class User implements GrantedAuthority, java.io.Serializable {
 	@OneToMany(orphanRemoval=true, mappedBy="user",cascade={CascadeType.MERGE})
 	private List<Account> account;
 	
+	@OneToMany(orphanRemoval=true, mappedBy="user",cascade={CascadeType.MERGE})
+	private List<FinancialRelease> releases;
+	
 	public User() {
 		
 	}
@@ -116,6 +119,19 @@ public class User implements GrantedAuthority, java.io.Serializable {
 	public void setAccount(List<Account> account) {
 		this.account = account;
 	}
+	
+
+	public List<FinancialRelease> getReleases() {
+		return releases;
+	}
+
+
+
+	public void setReleases(List<FinancialRelease> releases) {
+		this.releases = releases;
+	}
+
+
 
 	@Override
 	public String toString() {

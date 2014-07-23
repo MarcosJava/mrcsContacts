@@ -1,5 +1,6 @@
 package mrcsFelipe.financeiro.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -158,12 +159,27 @@ public class HomeController {
 		List<Account> accounts = this.accountService.findAll(user.getId());
 		List<FinancialRelease> releases = this.financialReleaseService.findAllReleaseByUser(user.getId());
 		
+		
+		//Getting total em cada Account -- Total dos lançamentos + do start da conta
+		for(int i = 0 ; i < accounts.size() ; i++){
+			Integer id = accounts.get(i).getId();
+			BigDecimal total = this.accountService.totalInAccount(id);
+			if(total == null){
+				total = accounts.get(i).getAmountStart();
+			}
+			accounts.get(i).setTotal(total);
+		}
+		
+		//Getting Total Amount Start
+		BigDecimal totalAmountStartAllAccount = this.accountService.amountStartTotalAllAccount(user.getEmail());
+		
+		
 		ModelAndView view = new ModelAndView("user/perfil");
 		Map<String, Object> maps = new HashMap<String, Object>();
 		maps.put("user", user);
 		maps.put("accounts", accounts );
 		maps.put("releases",releases );
-		
+		maps.put("totalStartAmount", totalAmountStartAllAccount);
 		view.addAllObjects(maps);
 		return view;
 	}

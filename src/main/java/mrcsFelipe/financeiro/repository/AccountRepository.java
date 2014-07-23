@@ -1,5 +1,6 @@
 package mrcsFelipe.financeiro.repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import mrcsFelipe.financeiro.entity.Account;
@@ -17,6 +18,16 @@ public interface AccountRepository extends CrudRepository<Account, Integer> , Pa
 	@Modifying
 	@Query("SELECT a FROM Account a, User u WHERE a.user.id = u.id AND u.id = :id")
 	public List<Account> findAccountByUser(@Param("id")Integer idUser);
+	
+	@Query("SELECT (SUM(f.value) + a.amountStart) FROM FinancialRelease f, Account a, User u"
+			+ " WHERE f.account.id = a.id "
+			+ " AND f.user.id = u.id "
+			+ " AND a.user.id= u.id"
+			+ " AND a.id=:idAccount")
+	public BigDecimal valueTotalAccount(@Param("idAccount")Integer idAccount);
+	
+	@Query("SELECT SUM(a.amountStart) FROM Account a WHERE a.user.email=:email")
+	public BigDecimal amountStartTotalAllAccount(@Param("email")String email);
 	
 	
 }
