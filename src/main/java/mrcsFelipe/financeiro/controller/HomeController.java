@@ -173,6 +173,13 @@ public class HomeController {
 		//Getting Total Amount Start
 		BigDecimal totalAmountStartAllAccount = this.accountService.amountStartTotalAllAccount(user.getEmail());
 		
+		//Getting Everytotal Amount + Release 
+		BigDecimal totalAllAccountAndRelease = this.accountService.totalAllAccountAndRelease(user.getEmail());
+		
+		//Total Release for User
+		BigDecimal totalReleaseByUser = this.financialReleaseService.totalReleaseByUser(user.getEmail());
+		
+		
 		
 		ModelAndView view = new ModelAndView("user/perfil");
 		Map<String, Object> maps = new HashMap<String, Object>();
@@ -180,6 +187,8 @@ public class HomeController {
 		maps.put("accounts", accounts );
 		maps.put("releases",releases );
 		maps.put("totalStartAmount", totalAmountStartAllAccount);
+		maps.put("totalReleaseAccount", totalAllAccountAndRelease);
+		maps.put("totalReleaseByUser", totalReleaseByUser );
 		view.addAllObjects(maps);
 		return view;
 	}

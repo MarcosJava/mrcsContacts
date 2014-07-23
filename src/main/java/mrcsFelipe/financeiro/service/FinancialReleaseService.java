@@ -17,9 +17,6 @@ public class FinancialReleaseService {
 	@Autowired
 	private FinancialReleaseRepository financialReleaseRepository;
 	
-	@Autowired
-	private FinancialReleaseRepository financialReleaseDao;
-	
 	public List<FinancialRelease> findAllReleaseByUser(Integer idUser){
 		return financialReleaseRepository.findAllReleaseByUser(idUser);
 	}
@@ -51,4 +48,9 @@ public class FinancialReleaseService {
 	public BigDecimal findTotalBetweenDate(Date one, Date two, String email){
 		return financialReleaseRepository.findTotalBetweenDate(one, two, email);
 	}
+	
+	public BigDecimal totalReleaseByUser(String email){
+		return this.financialReleaseRepository.totalReleaseByUserAndAccount(email);
+	}
+
 }

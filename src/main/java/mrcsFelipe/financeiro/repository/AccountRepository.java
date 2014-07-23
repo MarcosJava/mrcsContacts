@@ -29,5 +29,11 @@ public interface AccountRepository extends CrudRepository<Account, Integer> , Pa
 	@Query("SELECT SUM(a.amountStart) FROM Account a WHERE a.user.email=:email")
 	public BigDecimal amountStartTotalAllAccount(@Param("email")String email);
 	
+	@Query("SELECT SUM(f.value) + SUM(a.amountStart) FROM Account a, FinancialRelease f, User u"
+			+ " WHERE f.user.id = u.id"
+			+ " AND a.user.id = u.id"
+			+ " AND f.account.id = a.id"
+			+ " AND u.email=:email")
+	public BigDecimal totalAllAccountAndRelease(@Param("email")String email);
 	
 }

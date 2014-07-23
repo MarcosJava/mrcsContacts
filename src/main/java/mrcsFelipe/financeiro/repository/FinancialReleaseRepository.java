@@ -56,4 +56,9 @@ public interface FinancialReleaseRepository extends
 	public BigDecimal findTotalBetweenDate(@Param("dateFirst")Date dateFirst, 
 										   @Param("dateSecond")Date dateSecond,
 										   @Param("email")String email);
+	
+	
+	@Query("SELECT SUM(f.value) FROM FinancialRelease f"
+			+ " WHERE f.user.email=:email")
+	public BigDecimal totalReleaseByUserAndAccount(@Param("email")String email);
 }

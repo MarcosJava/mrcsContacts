@@ -38,4 +38,5 @@
 
 </div>
 </c:forEach>
+<hr />
 <p style="color:red;">Obs: caso aparecer mais de 1, deu empate =]</p>

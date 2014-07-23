@@ -45,4 +45,9 @@ public class AccountService {
 		return this.accountRepository.amountStartTotalAllAccount(email);
 	}
 	
+	public BigDecimal totalAllAccountAndRelease(String email){
+		return this.accountRepository.totalAllAccountAndRelease(email);
+	}
+	
+	
 }
