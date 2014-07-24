@@ -8,11 +8,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href='<c:url value="/home" />'> <spring:message code="project.title" /> </a>
+          <a class="brand" href='<c:url value="/" />'> <spring:message code="project.title" /> </a>
           
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href='<c:url value="/home" />'> <spring:message code="home" /> </a></li>
+              <li class="active"><a href='<c:url value="/" />'> <spring:message code="home" /> </a></li>
               <li><a href=<c:url value="/contactMe" />><spring:message code="contacts" /></a></li>
             </ul>
             

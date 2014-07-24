@@ -21,7 +21,7 @@
         <security:form-login 
 			authentication-failure-url="/"
 			login-page="/"
-			default-target-url="/user"/>
+			default-target-url="/"/>
 			
 
         <security:logout invalidate-session="true" 

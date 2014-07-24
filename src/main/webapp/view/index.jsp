@@ -8,7 +8,9 @@
         	<spring:message code='message.financeiro' />
         </p>
         <p>
-        	<a href="createUser" class="btn btn-primary btn-large"><spring:message code='register'  /> &raquo;</a>
+        	<a href="createUser" class="btn btn-primary btn-large">
+        		<spring:message code='register'  /> &raquo;
+        	</a>
         </p>
       </div><!-- hero-unit -->
 

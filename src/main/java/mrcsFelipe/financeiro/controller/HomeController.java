@@ -39,16 +39,56 @@ public class HomeController {
 	
 	//Redirect
 	@RequestMapping("/")
-    public String redirect(){
+    public ModelAndView redirect(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         //List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(auth.getAuthorities());
 		
+		ModelAndView view = new ModelAndView();
+		
 		if (auth.getName().equals("anonymousUser")) {
-			return "login";
+			view.setViewName("login");
+			return view;
 		}
 		
         if(!auth.getName().equals(" ") || auth.getName() != null){
-        	return "user/home";
+        	
+        	User user = this.userService.findByEmail(auth.getName());
+        	
+        	List<Account> accounts = this.accountService.findAll(user.getId());
+    		List<FinancialRelease> releases = this.financialReleaseService.findAllReleaseByUser(user.getId());
+    		
+    		
+    		//Getting total em cada Account -- Total dos lançamentos + do start da conta
+    		for(int i = 0 ; i < accounts.size() ; i++){
+    			Integer id = accounts.get(i).getId();
+    			BigDecimal total = this.accountService.totalInAccount(id);
+    			if(total == null){
+    				total = accounts.get(i).getAmountStart();
+    			}
+    			accounts.get(i).setTotal(total);
+    		}
+    		
+    		//Getting Total Amount Start
+    		BigDecimal totalAmountStartAllAccount = this.accountService.amountStartTotalAllAccount(user.getEmail());
+    		
+    		//Getting Everytotal Amount + Release 
+    		BigDecimal totalAllAccountAndRelease = this.accountService.totalAllAccountAndRelease(user.getEmail());
+    		
+    		//Total Release for User
+    		BigDecimal totalReleaseByUser = this.financialReleaseService.totalReleaseByUser(user.getEmail());
+    		
+    		
+    		view.setViewName("user/home");
+    		Map<String, Object> maps = new HashMap<String, Object>();
+    		maps.put("user", user);
+    		maps.put("accounts", accounts );
+    		maps.put("releases",releases );
+    		maps.put("totalStartAmount", totalAmountStartAllAccount);
+    		maps.put("totalReleaseAccount", totalAllAccountAndRelease);
+    		maps.put("totalReleaseByUser", totalReleaseByUser );
+    		view.addAllObjects(maps);
+    		return view;
+
         }
         
         return null;
@@ -73,11 +113,6 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
-	//Redirect -- Home
-	@RequestMapping("/home")
-	public String home(){
-	   return "redirect:/";
-	}
 	
 	@RequestMapping("/createUser")
 	public String registrar() {
@@ -152,48 +187,14 @@ public class HomeController {
 	 *********************************************************************/
 	@RequestMapping("user/perfil")
 	public ModelAndView perfil(){
-		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
 		User user = this.userService.findByEmail(auth.getName());
-		List<Account> accounts = this.accountService.findAll(user.getId());
-		List<FinancialRelease> releases = this.financialReleaseService.findAllReleaseByUser(user.getId());
-		
-		
-		//Getting total em cada Account -- Total dos lançamentos + do start da conta
-		for(int i = 0 ; i < accounts.size() ; i++){
-			Integer id = accounts.get(i).getId();
-			BigDecimal total = this.accountService.totalInAccount(id);
-			if(total == null){
-				total = accounts.get(i).getAmountStart();
-			}
-			accounts.get(i).setTotal(total);
-		}
-		
-		//Getting Total Amount Start
-		BigDecimal totalAmountStartAllAccount = this.accountService.amountStartTotalAllAccount(user.getEmail());
-		
-		//Getting Everytotal Amount + Release 
-		BigDecimal totalAllAccountAndRelease = this.accountService.totalAllAccountAndRelease(user.getEmail());
-		
-		//Total Release for User
-		BigDecimal totalReleaseByUser = this.financialReleaseService.totalReleaseByUser(user.getEmail());
-		
-		
 		
 		ModelAndView view = new ModelAndView("user/perfil");
 		Map<String, Object> maps = new HashMap<String, Object>();
 		maps.put("user", user);
-		maps.put("accounts", accounts );
-		maps.put("releases",releases );
-		maps.put("totalStartAmount", totalAmountStartAllAccount);
-		maps.put("totalReleaseAccount", totalAllAccountAndRelease);
-		maps.put("totalReleaseByUser", totalReleaseByUser );
 		view.addAllObjects(maps);
 		return view;
 	}
-	
-	
-	
 	
 }

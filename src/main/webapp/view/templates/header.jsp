@@ -30,6 +30,11 @@
 					<li><a href='<c:url value="/user/releases/dateForDate" /> '>Consultar por data</a></li>
 				</ul>
 			</li>
+			<li class="pull-right">
+				<a href='<c:url value="/user/perfil"/>' >
+					<img style="width:50px; height:50px;" src='<c:url value="/user/avatar"/>'/> 
+				</a>
+			</li>
 			<li class="dropdown pull-right"> <a href='<c:url value="/logout" />'>Sair</a> </li>
 			<sec:authorize ifAllGranted="ROLE_ADMIN">
 			<li class="dropdown pull-right">
