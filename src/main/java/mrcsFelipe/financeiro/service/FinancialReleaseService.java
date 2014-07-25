@@ -37,6 +37,18 @@ public class FinancialReleaseService {
 		return financialReleaseRepository.greatRelease(email);
 	}
 	
+	public List<FinancialRelease> maxReleaseRevenueOrMinReleaseDeposit(String email, String revenueOrDeposit){
+		return financialReleaseRepository.greatReleaseRevenueOrDeposit(email, revenueOrDeposit);
+	}
+	
+	public List<FinancialRelease> minReleaseRevenueOrMaxReleaseDeposit(String email, String revenueOrDeposit){
+		return financialReleaseRepository.minReleaseRevenueOrDeposit(email, revenueOrDeposit);
+	}
+	
+	public List<FinancialRelease> maxReleaseDeposit(String email){
+		return financialReleaseRepository.greatRelease(email);
+	}
+	
 	public List<FinancialRelease> minRelease(String email){
 		return financialReleaseRepository.minRelease(email);
 	}

@@ -2,10 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-<br />
-<br />
-<br />
+<sec:authorize access="isAuthenticated()">
 
 <div class="row-fluid" >
 <div class="panel panel-default">
@@ -17,8 +16,6 @@
   	<div class="panel-heading">
   		<font color="pink-dark" size="6">Ultimos 5 Lançamentos</font>
   	</div>
-  	
-  	
 <form >
 
 
@@ -100,10 +97,9 @@
     
     
      </c:forEach>
-     <tr> <td> </td> </tr>
-     <tr> <td> </td> </tr>
+     
     <tr>
-    	<td align="center">TOTAL DOS ULTIMOS 5 LANÇAMENTO 
+    	<td align="center"><strong style="color:dark blue;">TOTAL DOS ÚLTIMOS 5 LANÇAMENTO: </strong> 
     	
 	    	<c:if test="${total > 0}">
 	    		<font color="blue">R$ <c:out value="${total}" /></font>
@@ -118,11 +114,7 @@
   </table>
   </form>
 </div>
-
 <br />
-<br />
-<br />
-
 
 <ul class="pager">
   <li><a href="#">Previous</a></li>
@@ -132,14 +124,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 <script src="<c:url value="/resources/js/pages/contacts.js" />"></script>
+
+</sec:authorize>
+

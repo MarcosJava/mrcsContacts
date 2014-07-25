@@ -6,8 +6,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
+<sec:authorize access="isAuthenticated()">
+
 <div class="row">
 <div class="span4">
+	<div class="modal-body" style="height:200px;">
+
  <h3 style="color:gray">Suas contas :</h3>
  
  	<c:forEach var="account" items="${accounts }">
@@ -104,7 +108,12 @@
 	    </c:if>
 <hr />
 	</c:forEach>
-</div>
+
+</div><!-- modal body Scrollbar -->
+</div><!-- span 4 -->
+
+
+
 <div class="span4">
 <h3 style="color:gray;">Observações:</h3>
  <p>
@@ -180,3 +189,4 @@
  
  </div>
  </div>
+ </sec:authorize>

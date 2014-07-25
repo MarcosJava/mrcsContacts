@@ -45,29 +45,28 @@ public class AccountController {
 	 * 
 	 *CREATE
 	 */
-	
 	@RequestMapping(value="user/createAccount/create",method={RequestMethod.POST, RequestMethod.PUT})
 	public ModelAndView createAccount(@RequestParam("name")String name,
 									  @RequestParam("description")String description,
 									  @RequestParam("amount")String amount){
 		
-		//Retirando os pontos e virgulas do dinheiro
-		String valuePart = amount.replace(".", "");
-		valuePart = valuePart.replace(",", ".");
-		
 		
 		ModelAndView mavError = new ModelAndView("user/createAccount");
 		ModelAndView mavSuccess = new ModelAndView("user/accounts");
 		
-		
-		
 		if(name.trim().equals("") || name == null){
-			mavError.addObject("error", "Coloque o nome da conta");
+			mavError.addObject("error", "Informe os valores obrigatorios, campos com asteristicos(*) ");
+			return mavError;
 		}
 		
 		if(amount.trim().equals("")){
 			amount = "0";
 		}
+		
+		
+		//Retirando os pontos e virgulas do dinheiro
+		String valuePart = amount.replace(".", "");
+		valuePart = valuePart.replace(",", ".");
 		
 		User user = new User();
 		Account account = new Account();

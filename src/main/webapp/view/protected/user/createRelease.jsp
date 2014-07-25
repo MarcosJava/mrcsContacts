@@ -4,17 +4,14 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-<br />
-<br />
-<br />
 
 <sec:authorize access="isAuthenticated()">
 
 	<div class="bs-example">
 	
 	
-	<font color="red" size="10px"><c:out value="${error }" /></font> 
-	<font color="blue" size="10px"><c:out value="${success }" /></font> 
+	<font color="red" size="6px"><c:out value="${error }" /></font> 
+	<font color="blue" size="6px"><c:out value="${success }" /></font> 
 	
 
 		<fieldset>

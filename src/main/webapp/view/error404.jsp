@@ -23,7 +23,7 @@
           <br />
           <p>A página solicitada não pode ser encontrado, entre em contato com o webmaster/suporte ou tente novamente. Use o botão <b>Voltar</b> de seu navegadore</p>
           <p><b>Ou você pode simplesmente pressionar este botão abaixo:</b></p>
-          <a href=' <c:url value="/home" />'
+          <a href=' <c:url value="/" />'
            class="btn btn-large btn-info"><i class="icon-home icon-white"></i> Preciona-me </a>
         </div>
         <br /> 

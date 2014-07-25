@@ -4,10 +4,6 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
-<br />
-<br />
-<br />
-
 <sec:authorize access="isAuthenticated()">
 	
 <div class="bs-example">
@@ -15,13 +11,13 @@
 
 	<fieldset>
 		<legend> Criando Conta</legend>
-	${error }
+	<font color="red" size="4px"><c:out value="${error }" /></font> 
 
-	<form class="form-horizontal" action="createAccount/create" method="post">
+	<form class="form-horizontal" action='<c:url value="/user/createAccount/create" /> ' method="post">
 		
 		<div class="form-group">
 			<label for="inputEmail" class="control-label col-xs-2"> Nome
-				da conta: </label>
+				da conta:* </label>
 			<div class="col-xs-10">
 				<input type="text" class="form-control" id="inputEmail"
 					placeholder="Nome da conta" name="name">
@@ -47,10 +43,6 @@
             <input type="text" class="form-control" placeholder="Valor" id="currency" name="amount"/>
         </div>
             
-        
-    
-		<br />
-		<br />
 		<br />
 
 		<div class="form-group">
@@ -58,6 +50,7 @@
 				<button type="submit" class="btn btn-primary">Criar</button>
 			</div>
 		</div>
+		<strong style="color:red;">Obs: caso queira o valor zero (0), apenas deixe em branco.</strong> 
 	</form>
 	</fieldset>
 </div>

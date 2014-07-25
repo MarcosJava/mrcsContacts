@@ -6,13 +6,8 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<br />
-<br />
-<br />
-
-
 <sec:authorize access="isAuthenticated()">
-
+	<strong style="color:red; size:6px;" ><c:out value="${error }" /></strong>
 	<div class="bs-example">
 		<fieldset>
 			<legend> Consultando por Data</legend>
@@ -31,8 +26,6 @@
 						<input type="text" id="calendario2"	name="dateSecond" />
 				</div>
 
-				<br /> <br /> <br />
-
 				<div class="form-group">
 					<div class="col-xs-offset-2 col-xs-10">
 						<button type="submit" class="btn btn-primary">Consultar</button>
@@ -41,9 +34,6 @@
 			</form>
 		</fieldset>
 	</div>
-	
-	
-	<br />
 
 <div class="row-fluid" >
 <div class="panel panel-default">
@@ -53,13 +43,11 @@
   	
   	<br />
   	<div class="panel-heading">
-  		<font color="pink-dark" size="6">Ultimos 5 Lançamentos</font>
+  		<font color="pink-dark" size="6">Lançamentos entre datas</font>
   	</div>
   	
   	
 <form >
-
-
   <!-- Table -->
   <table class="table">
     <tr>
@@ -138,10 +126,8 @@
     
     
      </c:forEach>
-     <tr> <td> </td> </tr>
-     <tr> <td> </td> </tr>
     <tr>
-    	<td align="center">TOTAL DOS ULTIMOS 5 LANÇAMENTO 
+    	<td align="center"><strong style="color:dark blue;">TOTAL DOS LANÇAMENTOS ENTRE DATAS :</strong>
     	
 	    	<c:if test="${total > 0}">
 	    		<font color="blue">R$ <c:out value="${total}" /></font>

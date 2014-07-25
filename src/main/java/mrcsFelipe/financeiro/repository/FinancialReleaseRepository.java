@@ -33,10 +33,24 @@ public interface FinancialReleaseRepository extends
 			+ "WHERE value=(select max(f.value) from FinancialRelease f WHERE f.user.email=:email) ")
 	public List<FinancialRelease> greatRelease(@Param("email") String email);
 	
+	@Query("FROM FinancialRelease "
+			+ "WHERE value=(select max(f.value) from FinancialRelease f"
+			               + " WHERE f.typeValue=:revenueOrDeposit"
+			               + " AND f.user.email=:email)")
+	public List<FinancialRelease> greatReleaseRevenueOrDeposit(@Param("email") String email,
+															   @Param("revenueOrDeposit")String revenueOrDeposit);
+	
 	
 	@Query("FROM FinancialRelease "
 			+ "WHERE value=(select min(f.value) from FinancialRelease f WHERE f.user.email=:email) ")
 	public List<FinancialRelease> minRelease(@Param("email") String email);
+	
+	
+	@Query("FROM FinancialRelease "
+			+ "WHERE value=(select min(f.value) from FinancialRelease f "
+							+ " WHERE f.user.email=:email AND f.typeValue=:revenueOrDeposit) ")
+	public List<FinancialRelease> minReleaseRevenueOrDeposit(@Param("email") String email,
+															 @Param("revenueOrDeposit")String revenueOrDeposit);
 	
 	@Query("FROM FinancialRelease f "
 			+ "WHERE  f.dateRelease "

@@ -191,16 +191,12 @@ public class FinancialReleaseController {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			List<FinancialRelease> releases = 
 					financialReleaseService.findAllReleaseForLimit(auth.getName().trim(),5);
-			
-		
-			
-			
+	
 			for (FinancialRelease financialRelease : releases) {
 				total = total.add(financialRelease.getValue());	
 				System.err.println("VALOR  == " + financialRelease.getValue());
 				System.err.println("VALOR TOTAL BIG == " + total);
 			}
-			
 			
 			
 			ModelAndView view = new ModelAndView("user/releases/limit5");
@@ -231,13 +227,19 @@ public class FinancialReleaseController {
 	public ModelAndView maximumRelease(){
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		releases = this.financialReleaseService.maxRelease(auth.getName().trim());
 		
+		List<FinancialRelease> revenue = 
+				this.financialReleaseService.maxReleaseRevenueOrMinReleaseDeposit(auth.getName().trim(), "revenue");
+		
+		List<FinancialRelease> deposit = 
+				this.financialReleaseService.minReleaseRevenueOrMaxReleaseDeposit(auth.getName().trim(), "deposit");
+ 
 		ModelAndView view = new ModelAndView();
 		view.setViewName("user/releases/maximum");
 		
 		Map<String, Object> maps = new HashMap<String, Object>();
-		maps.put("releases", releases);
+		maps.put("revenue", revenue);
+		maps.put("deposit", deposit);
 		
 		view.addAllObjects(maps);
 		
@@ -251,17 +253,21 @@ public class FinancialReleaseController {
 	 */
 	@RequestMapping("user/releases/minimumRelease")
 	public ModelAndView minimoRelease(){
-		System.err.println("AKI");
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		releases = this.financialReleaseService.minRelease(auth.getName().trim());
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		List<FinancialRelease> revenue = 
+				this.financialReleaseService.minReleaseRevenueOrMaxReleaseDeposit(auth.getName().trim(), "revenue");
+		
+		List<FinancialRelease> deposit = 
+				this.financialReleaseService.maxReleaseRevenueOrMinReleaseDeposit(auth.getName().trim(), "deposit");
+ 
 		ModelAndView view = new ModelAndView();
 		view.setViewName("user/releases/minimum");
 		
-		System.err.println("Aloha !");
-		
 		Map<String, Object> maps = new HashMap<String, Object>();
-		maps.put("releases", releases);
+		maps.put("revenue", revenue);
+		maps.put("deposit", deposit);
 		
 		view.addAllObjects(maps);
 		
@@ -275,16 +281,15 @@ public class FinancialReleaseController {
 	 */
 	
 	@RequestMapping(value="user/releases/dateForDate", method={RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET})
-	public ModelAndView retrieveDateForDate(
-			){
-		
-		
+	public ModelAndView retrieveDateForDate(){
+				
 		ModelAndView view = new ModelAndView("user/releases/dateForDate");
 		
 		Map<String, Object> maps = new HashMap<String, Object>();
 		releases = new ArrayList<FinancialRelease>();
+		total = new BigDecimal(0);
 		maps.put("releases", releases);
-		
+		maps.put("total", total);
 		view.addAllObjects(maps);
 		
 		return view;
@@ -296,13 +301,28 @@ public class FinancialReleaseController {
 													   @RequestParam("dateSecond") String dateTwo) throws ParseException{
 	
 		
+		if(dateOne.trim().equals("") && dateTwo.trim().equals("")){
+			
+			ModelAndView view = new ModelAndView("user/releases/dateForDate");
+			
+			
+			Map<String, Object> maps = new HashMap<String, Object>();
+			maps.put("releases", releases);
+			maps.put("total", total);
+			maps.put("error", "Selecione os campos obrigatorios");
+			view.addAllObjects(maps);
+			
+			return view; 
+			
+		}
+		
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Date dateFirst = df.parse(dateOne);
 		
 		Date dateSecond = df.parse(dateTwo);
 		
 		System.err.println("Date One =" + dateFirst);
-		System.err.println("Date Two =" + dateSecond);
+		System.err.println("Date Two =" + dateSecond);		
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		

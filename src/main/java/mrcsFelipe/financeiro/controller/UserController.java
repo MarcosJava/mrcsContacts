@@ -96,8 +96,14 @@ public class UserController {
 		File arquivo = new File("/home/marcos/financeiro/avatar/"+auth.getName().trim()+".png");
 		
 		if (! arquivo.exists()) {
-			
 			arquivo = new File("/home/marcos/financeiro/avatar/125x125.jpg");
+		}
+		if(!arquivo.exists()){
+			arquivo = new File("E:/PROJETOS/FinanceiroMrcsFelipe/Avatares/"+auth.getName().trim()+".png");
+			
+			if(!arquivo.exists()){
+				arquivo = new File("E:/PROJETOS/FinanceiroMrcsFelipe/Avatares/125x125.jpg");
+			}
 		}
 		
 		byte[] resultado = new byte[(int)arquivo.length()];
@@ -121,12 +127,18 @@ public class UserController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		File dir = new File("/home/marcos/financeiro/avatar/");
+		
+		if(!dir.exists()){
+			dir = new File("E:/PROJETOS/FinanceiroMrcsFelipe/Avatares");
+		}
+		
 		if (! dir.exists()) {
 			dir.mkdirs();
 		}
 			try {
 				FileOutputStream arquivo = new FileOutputStream(
 						dir.getAbsolutePath() + "/" + auth.getName().trim() + ".png");
+				
 				arquivo.write(avatar.getBytes());
 				arquivo.close();
 			} catch (IOException ex) {
