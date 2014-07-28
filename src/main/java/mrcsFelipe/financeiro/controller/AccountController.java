@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -40,7 +41,6 @@ public class AccountController {
 	@Value("5")
 	private int maxResult;
 	
-	
 	/**
 	 * 
 	 *CREATE
@@ -70,8 +70,8 @@ public class AccountController {
 		
 		User user = new User();
 		Account account = new Account();
-		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
 		
 		user = userService.findByEmail(auth.getName());
 		account.setUser(user);
@@ -85,7 +85,7 @@ public class AccountController {
 		
 		Map<String, Object> modelMap = new HashMap<String, Object>();
 		modelMap.put("error", "Cadastrado com Sucesso : " + name);
-		modelMap.put("lstAccount", accountService.findAll(user.getId()) );
+		modelMap.put("lstAccount", accountService.findAll(auth.getName()));
 		mavSuccess.addAllObjects(modelMap);
 		
 		System.out.println(name);
@@ -105,20 +105,20 @@ public class AccountController {
 											  BindingResult bindingResult,
 											  String dateCreate){
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user  = userService.findByEmail(auth.getName());
 		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");	
 		ModelAndView view = new ModelAndView("user/accounts");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		try {
+			User user  = userService.findByEmail(auth.getName());
 			account.setUser(user);
 			account.setDateCreate(sdf.parse(dateCreate));
 			accountService.update(account);
 			
 			map.put("error", "Editado com Sucesso a Conta = " + account.getName());
-			map.put("lstAccount", accountService.findAll(user.getId()));
+			map.put("lstAccount", accountService.findAll(auth.getName()));
 			view.addAllObjects(map);
 			
 				
@@ -130,7 +130,7 @@ public class AccountController {
 			
 			map.put("error", "Não foi possivel fazer essa alteração, caso o erro persista."
 					+ "Informe ao suporte no Contact Me");
-			map.put("lstAccount", accountService.findAll(user.getId()));
+			map.put("lstAccount", accountService.findAll(auth.getName()));
 			view.addAllObjects(map);
 			return view;
 		}
@@ -152,24 +152,27 @@ public class AccountController {
 		
 	}
 	
+	/**
+	 * 
+	 *DELETE
+	 */
+	
+	
 	@RequestMapping(value="user/account/delete/{id}", method={RequestMethod.GET})
 	public ModelAndView deleteAccount(@PathVariable("id")String id ){
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		Account account = new Account();
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user  = userService.findByEmail(auth.getName());
-		
+
 		ModelAndView view = new ModelAndView("user/accounts");
-		
 		
 		account = accountService.findById(Integer.parseInt(id));
 		
 		accountService.delete(account);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		List<Account> accounts = accountService.findAll(auth.getName());
 		
-		
-		map.put("lstAccount", accountService.findAll(user.getId()));
+		map.put("lstAccount", accounts);
 		map.put("error", "Conta excluida com sucesso : " +  account.getName());
 		view.addAllObjects(map);
 		return view;

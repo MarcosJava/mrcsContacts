@@ -3,6 +3,7 @@ package mrcsFelipe.financeiro.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,11 +21,11 @@ public class FinancialRelease {
 	@Id @GeneratedValue
 	private Integer id;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="user_id")
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.MERGE})
 	@JoinColumn(name="account_id")
 	private Account account;
 	

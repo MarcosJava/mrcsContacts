@@ -19,8 +19,8 @@ public class AccountService {
 		accountRepository.save(account);
 	}
 	
-	public List<Account> findAll(Integer idUser){
-		return accountRepository.findAccountByUser(idUser);
+	public List<Account> findAll(String email){
+		return accountRepository.findAccountByUser(email);
 	}
 	
 	public Account findById(Integer id){

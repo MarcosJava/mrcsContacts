@@ -19,8 +19,8 @@ public interface FinancialReleaseRepository extends
 
 	
 	@Modifying
-	@Query("SELECT fr FROM FinancialRelease fr, User u WHERE fr.user.id = u.id AND u.id = :id")
-	public List<FinancialRelease> findAllReleaseByUser(@Param("id")Integer idUser);
+	@Query("SELECT fr FROM FinancialRelease fr, User u WHERE fr.user.id = u.id AND u.email= :email")
+	public List<FinancialRelease> findAllReleaseByUser(@Param("email")String email);
 	
 	
 	@Query("SELECT fr FROM FinancialRelease fr, User u "+
@@ -75,4 +75,30 @@ public interface FinancialReleaseRepository extends
 	@Query("SELECT SUM(f.value) FROM FinancialRelease f"
 			+ " WHERE f.user.email=:email")
 	public BigDecimal totalReleaseByUserAndAccount(@Param("email")String email);
+	
+	
+	
+
+	@Query("SELECT SUM(f.value) FROM FinancialRelease f "
+			+ "WHERE  f.dateRelease "
+			+ "BETWEEN :dateFirst AND :dateSecond"
+			+ " AND f.user.email=:email"
+			+ " AND f.account.id=:idAccount")
+	public BigDecimal findTotalBetweenDateByAccount(@Param("dateFirst")Date dateFirst, 
+										   @Param("dateSecond")Date dateSecond,
+										   @Param("email")String email,
+										   @Param("idAccount")Integer idAccount);
+	
+
+	@Query("FROM FinancialRelease f "
+			+ "WHERE  f.dateRelease "
+			+ "BETWEEN :dateFirst AND :dateSecond"
+			+ " AND f.user.email=:email"
+			+ " AND f.account.id=:idAccount"
+			+ " ORDER BY f.dateRelease ASC")
+	public List<FinancialRelease> findAllReleaseBetweenDateByAccount(@Param("dateFirst")Date dateFirst, 
+															@Param("dateSecond")Date dateSecond,
+															@Param("email")String email,
+															@Param("idAccount")Integer idAccount);
+	
 }

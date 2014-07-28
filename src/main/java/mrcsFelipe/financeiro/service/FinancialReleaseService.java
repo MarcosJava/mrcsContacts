@@ -17,8 +17,8 @@ public class FinancialReleaseService {
 	@Autowired
 	private FinancialReleaseRepository financialReleaseRepository;
 	
-	public List<FinancialRelease> findAllReleaseByUser(Integer idUser){
-		return financialReleaseRepository.findAllReleaseByUser(idUser);
+	public List<FinancialRelease> findAllReleaseByUser(String email){
+		return financialReleaseRepository.findAllReleaseByUser(email);
 	}
 	
 	public void save(FinancialRelease release){
@@ -59,6 +59,14 @@ public class FinancialReleaseService {
 	
 	public BigDecimal findTotalBetweenDate(Date one, Date two, String email){
 		return financialReleaseRepository.findTotalBetweenDate(one, two, email);
+	}
+	
+	public List<FinancialRelease> findAllReleaseBetweenDateByAccount(Date one, Date two, String email, Integer idAccount){
+		return financialReleaseRepository.findAllReleaseBetweenDateByAccount(one, two, email, idAccount);
+	}
+	
+	public BigDecimal findTotalBetweenDateByAccount(Date one, Date two, String email, Integer idAccount){
+		return financialReleaseRepository.findTotalBetweenDateByAccount(one, two, email, idAccount);
 	}
 	
 	public BigDecimal totalReleaseByUser(String email){

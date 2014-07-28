@@ -10,7 +10,7 @@
 
 <div class="row">
 <div class="span4">
-	<div class="modal-body" style="height:200px;">
+	<div class="modal-body" style="height:350px;">
 
  <h3 style="color:gray">Suas contas :</h3>
  
@@ -105,6 +105,10 @@
 	    						  currencySymbol="R$" 
 	    						  type="currency" />
 	    	</font>
+	    </c:if>
+	    
+	    <c:if test="${account.total == 0 }">
+	    	R$ 0,00	
 	    </c:if>
 <hr />
 	</c:forEach>

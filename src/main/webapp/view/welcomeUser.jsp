@@ -1,5 +1,9 @@
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  <%@ taglib prefix="spring"  uri="http://www.springframework.org/tags"%>
+ 
+ <br />
+ <br />
+ <br />
  <div class="row">
     <div class="span12">
       <div class="hero-unit center">

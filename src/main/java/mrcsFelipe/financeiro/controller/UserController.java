@@ -5,15 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import mrcsFelipe.financeiro.entity.Role;
 import mrcsFelipe.financeiro.entity.User;
 import mrcsFelipe.financeiro.service.UserService;
+import mrcsFelipe.financeiro.utils.GMail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -36,16 +35,22 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	/**
+	 * 
+	 * Register User
+	 * @throws Exception -- Enviar email do Gmail
+	 * 
+	 * 
+	 * 
+	 */
 
 	@RequestMapping(value="/registreUser", method={RequestMethod.POST, RequestMethod.PUT})
 	public ModelAndView registreUser(@RequestParam("confirmPass") String confirmPassword,
 									 @Valid User user,
-									 BindingResult bindingResult,
-									 HttpSession session,
-									 Locale locale) {
+									 BindingResult bindingResult) throws Exception {
 		
 		ModelAndView resultError = new ModelAndView("createUser");
-		ModelAndView resultSuccess = new ModelAndView("successUser");
+		ModelAndView resultSuccess = new ModelAndView("checkEmail");
 		
 		//Utilizando o Hibernate-Validate
 		//Use hibernate validate
@@ -74,13 +79,64 @@ public class UserController {
 		
 		user.setRole(Role.ROLE_USER);
 		user.setPassword(org.apache.commons.codec.digest.DigestUtils.sha256Hex(confirmPassword));
-		user.setEnabled(true);
+		user.setEnabled(false);
 		System.out.println(user);
 		userService.save(user);
-		session.setAttribute("user", user);
-		resultSuccess.addObject("success", "Cadastrado com sucesso !");
+		
+		
+		
+		GMail gmail = new GMail("mfelipesp@gmail.com", user.getEmail(), "Ativar Conta no Meu Financeiro", 
+				"Olá você se cadastrou no Financeiro, "
+				+ "para concordar com esse cadastro ative agora e começe usar o "
+				+ "Financeiro para controlar suas financias, acesse o link abaixo : "
+				+ "\n\n\n\n http://localhost:8080/financeiro/active/"
+				+ user.getPassword()
+				+"/"+user.getEmail()+"/"+true+"\n\n\n\n\n Caso não seje você que se cadastrou pode dar um clique no link abaixo: \n\n\n\n\n\n\n"
+				+ "http://localhost:8080/financeiro/active/"
+				+ user.getPassword()
+				+"/"+user.getEmail()+"/"+false + "\n\n\n\n\n Agradeçemos a pela sua colaboração.\n\nAtt Financeiro");
+		gmail.enviarEmail();
+		resultSuccess.addObject("success", "Cadastrado com sucesso, verifique seu e-mail e aceite !");
 		return resultSuccess;
 	}
+	
+	
+	@RequestMapping(value="active/{password}/{email}/{status}", method={RequestMethod.GET})
+	public ModelAndView activeRegisterUser(@PathVariable("password") String password,
+										   @PathVariable("email") String email,
+										   @PathVariable("status") boolean status){
+		
+		System.out.println(password);
+		System.out.println(email);
+		System.out.println(status);
+		
+		ModelAndView view = new ModelAndView();
+		
+		User user = userService.findByEmail(email);
+		
+		if(!user.getPassword().equals(password)){
+			 view.setViewName("redirect:/");
+			 return view;
+		}
+		if(!user.getPassword().equals(password)){
+			 view.setViewName("redirect:/");
+			 return view;
+		}
+		
+		if(status == true){
+			view.setViewName("successUser");
+			user.setEnabled(true);
+			userService.save(user);
+			return view;
+		}else{
+			view.setViewName("thanksEmail");
+			userService.delete(user);
+			return view;
+		}
+		
+	}
+	
+	
 	
 	
 	/*

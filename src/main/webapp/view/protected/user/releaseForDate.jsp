@@ -13,7 +13,30 @@
 			<legend> Consultando por Data</legend>
 			<form class="form-horizontal" action='<c:url value="/user/releases/dateForDate/retrieve"/>'
 				method="post">
-
+				
+				
+				
+				<div class="form-group">
+					<label for="inputAccount" class="control-label col-xs-2">
+						Selecione uma Conta:* &nbsp;&nbsp;  
+					</label>
+						
+					<div class="col-xs-10">
+						<select class="selectpicker btn-danger" 
+							name="idAccount" id="inputAccount" >
+							 <optgroup label="Contas">
+								<option value="">Selecione uma opção</option>
+								<c:forEach items="${accounts }" var="itens">
+									<option value='<c:out value="${itens.id }" />'>
+										 <c:out value="${itens.name} " />
+									</option>
+								</c:forEach>
+							</optgroup>
+						</select>
+					</div>
+				</div>
+				<br />
+				
 				<div class="input-group">
 					<label for="calendario" class="control-label col-xs-2">
 						Primeira Data:* &nbsp;&nbsp;</label> 

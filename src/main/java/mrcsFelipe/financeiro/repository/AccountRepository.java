@@ -16,8 +16,8 @@ public interface AccountRepository extends CrudRepository<Account, Integer> , Pa
 	public Account findById(Integer id);
 	
 	@Modifying
-	@Query("SELECT a FROM Account a, User u WHERE a.user.id = u.id AND u.id = :id")
-	public List<Account> findAccountByUser(@Param("id")Integer idUser);
+	@Query("SELECT a FROM Account a WHERE a.user.email= :email")
+	public List<Account> findAccountByUser(@Param("email")String email);
 	
 	@Query("SELECT (SUM(f.value) + a.amountStart) FROM FinancialRelease f, Account a, User u"
 			+ " WHERE f.account.id = a.id "

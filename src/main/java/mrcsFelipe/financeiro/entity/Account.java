@@ -43,7 +43,7 @@ public class Account {
 	@JoinColumn(name="system_user_id")
 	private User user;
 	
-	@OneToMany(mappedBy="account", orphanRemoval=true ,cascade={CascadeType.MERGE})
+	@OneToMany(mappedBy="account" ,cascade={CascadeType.MERGE, CascadeType.REMOVE})
 	private List<FinancialRelease> financialRelease;
 	
 	public Account() {

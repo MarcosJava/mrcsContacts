@@ -20,6 +20,14 @@
      <definition name="successUser"  extends="main" >
     	<put-attribute name="bodymain" value="/view/successUser.jsp"/>
     </definition>
+   	
+   	<definition name="checkEmail"  extends="main" >
+    	<put-attribute name="bodymain" value="/view/checkEmail.jsp"/>
+    </definition>
+    
+    <definition name="thanksEmail"  extends="main" >
+    	<put-attribute name="bodymain" value="/view/thanksEmail.jsp"/>
+    </definition>
  
     
     <definition name="user/welcomeUser" extends="main">

@@ -45,6 +45,8 @@ public class FinancialReleaseController {
 	BigDecimal total = new BigDecimal(0);
 	private List<FinancialRelease> releases;
 	
+	private Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	
 	/**
 	 * 
 	 *CREATE
@@ -60,12 +62,12 @@ public class FinancialReleaseController {
 									  String date){
 		
 		//Getting User
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
 		User user  = userService.findByEmail(auth.getName());
 		
 		ModelAndView view = new ModelAndView();
 		Map<String, Object> modelView = new HashMap<String, Object>();
-		modelView.put("accounts", accountService.findAll(user.getId()));
+		modelView.put("accounts", accountService.findAll(this.auth.getName()));
 		String drawOrDebit = "";
 		
 		
@@ -283,13 +285,16 @@ public class FinancialReleaseController {
 	@RequestMapping(value="user/releases/dateForDate", method={RequestMethod.POST, RequestMethod.PUT, RequestMethod.GET})
 	public ModelAndView retrieveDateForDate(){
 				
-		ModelAndView view = new ModelAndView("user/releases/dateForDate");
+		List<Account> accounts = accountService.findAll(this.auth.getName());
 		
+		ModelAndView view = new ModelAndView("user/releases/dateForDate");
+				
 		Map<String, Object> maps = new HashMap<String, Object>();
 		releases = new ArrayList<FinancialRelease>();
 		total = new BigDecimal(0);
 		maps.put("releases", releases);
 		maps.put("total", total);
+		maps.put("accounts", accounts);
 		view.addAllObjects(maps);
 		
 		return view;
@@ -298,8 +303,13 @@ public class FinancialReleaseController {
 	
 	@RequestMapping(value="user/releases/dateForDate/retrieve", method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView retrieveDateForDateWithConsult(@RequestParam("dateFirst")String dateOne,
-													   @RequestParam("dateSecond") String dateTwo) throws ParseException{
-	
+													   @RequestParam("dateSecond") String dateTwo,
+													   @RequestParam("idAccount")String idAccount) throws ParseException{
+		
+		
+		List<Account> accounts = accountService.findAll(this.auth.getName());
+		
+		System.out.println("ID pego da conta = " + idAccount);
 		
 		if(dateOne.trim().equals("") && dateTwo.trim().equals("")){
 			
@@ -309,6 +319,7 @@ public class FinancialReleaseController {
 			Map<String, Object> maps = new HashMap<String, Object>();
 			maps.put("releases", releases);
 			maps.put("total", total);
+			maps.put("accounts", accounts);
 			maps.put("error", "Selecione os campos obrigatorios");
 			view.addAllObjects(maps);
 			
@@ -326,8 +337,15 @@ public class FinancialReleaseController {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
-		releases = this.financialReleaseService.findAllReleaseBetweenDate(dateFirst, dateSecond, auth.getName().trim());
-		total = this.financialReleaseService.findTotalBetweenDate(dateFirst, dateSecond, auth.getName().trim());
+		releases = this.financialReleaseService.findAllReleaseBetweenDateByAccount(dateFirst,
+																				   dateSecond, 
+																				   auth.getName().trim(),
+																				   Integer.parseInt(idAccount));
+		
+		total = this.financialReleaseService.findTotalBetweenDateByAccount(dateFirst,
+																		   dateSecond, 
+																		   auth.getName(), 
+																		   Integer.parseInt(idAccount));
 		
 		for (FinancialRelease financialRelease : releases) {
 			System.err.println(financialRelease.getName());
@@ -340,6 +358,7 @@ public class FinancialReleaseController {
 		Map<String, Object> maps = new HashMap<String, Object>();
 		maps.put("releases", releases);
 		maps.put("total", total);
+		maps.put("accounts", accounts);
 		
 		view.addAllObjects(maps);
 		
