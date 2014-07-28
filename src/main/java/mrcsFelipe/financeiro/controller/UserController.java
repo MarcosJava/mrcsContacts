@@ -99,7 +99,16 @@ public class UserController {
 		resultSuccess.addObject("success", "Cadastrado com sucesso, verifique seu e-mail e aceite !");
 		return resultSuccess;
 	}
-	
+	/*******
+	 * 
+	 * ATIVAR O USUARIO PELO EMAIL
+	 * 
+	 * Active the User with Email
+	 * @param password
+	 * @param email
+	 * @param status
+	 * @return
+	 */
 	
 	@RequestMapping(value="active/{password}/{email}/{status}", method={RequestMethod.GET})
 	public ModelAndView activeRegisterUser(@PathVariable("password") String password,
@@ -218,5 +227,23 @@ public class UserController {
 		
 		return i;
 	}
+	
+	
+	
+	/*****
+	 * 
+	 * EDITAR SENHA -- USUARIO LOGADO 
+	 * 
+	 */
+	@RequestMapping(value="", method={RequestMethod.POST})
+	public ModelAndView changePassword(){
+		
+		ModelAndView view = new ModelAndView();
+		
+		view.setViewName("/");
+		
+		return view; 
+	}
+	
 	
 }
