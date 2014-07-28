@@ -81,21 +81,17 @@
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
 	</bean>
-	
 	 
-	 <!-- O view resolver usado em nosso 'Ola Mundo' -->
-	 <!--
-	 	 
-	 <bean id="viewResolver"
-    	class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-        <property name="prefix">
-            <value>/views/</value>
+	 
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
+            </list>
         </property>
-        <property name="suffix">
-            <value>.jsp</value>
-        </property>
-    </bean>
-     -->
+    </bean> 
+	 
 	 
 	<!-- Habilitando upload de arquivos -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
