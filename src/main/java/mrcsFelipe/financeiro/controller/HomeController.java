@@ -13,6 +13,7 @@ import mrcsFelipe.financeiro.entity.User;
 import mrcsFelipe.financeiro.service.AccountService;
 import mrcsFelipe.financeiro.service.FinancialReleaseService;
 import mrcsFelipe.financeiro.service.UserService;
+import mrcsFelipe.financeiro.vo.AccountsListVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -21,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -38,6 +40,24 @@ public class HomeController {
 	private FinancialReleaseService financialReleaseService;
 	
 	private Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	
+
+	
+	
+	@RequestMapping(value="/services/accounts", method=RequestMethod.GET,headers="Accept=application/json")
+	public @ResponseBody AccountsListVO topicosUsuarioJson(){
+		
+		
+		List<Account> accounts = accountService.findAll("marcos@gmail.com");
+		AccountsListVO accountsVO = new AccountsListVO(0, 0, accounts);
+		
+		
+		System.out.println("OIEE");
+		
+		return accountsVO;
+	}
+	
+	
 	
 	//Redirect
 	@RequestMapping("/")

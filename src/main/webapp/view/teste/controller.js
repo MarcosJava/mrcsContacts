@@ -1,9 +1,14 @@
 function ListaComprasController($scope) {
-    $scope.itens = [
-        {produto: 'Leite', quantidade: 2, comprado: false},
-        {produto: 'Cerveja', quantidade: 12, comprado: false}
-    ];
-    $scope.produto;
+    
+	$scope.url = 'http:/192.168.10.33:8080/financeiro/user/accounts';
+	
+	$scope.itens = $http.get(url).
+    success(function(data) {
+        $scope.greeting = data;
+    });
+    
+    
+    
  
     $scope.adicionaItem = function () {
         $scope.itens.push({produto: $scope.item.produto,

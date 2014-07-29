@@ -19,7 +19,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name="account")
-public class Account {
+public class Account implements java.io.Serializable {
 
 	@Id @GeneratedValue
 	private Integer id;
@@ -49,7 +49,12 @@ public class Account {
 	public Account() {
 		
 	}
-
+	
+	/**
+	 * 
+	 * Getter & Setter
+	 */
+	
 	public Integer getId() {
 		return id;
 	}

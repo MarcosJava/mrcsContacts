@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="listaTelefonica">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<title>Lista de compras</title>
+<meta charset="utf-8">
+<script src="angular.min.js"></script>
+<script src="lista.js"></script>
+</head>
+<body ng-controller="listaTelefonicaCtrl">
+	<h1>{{titulo}}</h1>
+	<table>
+		<tr>
+			<th>Nome</th><th>Telefone</th>
+		</tr>
+		<tr ng-repeat="contato in contatos">
+			<td>{{contato.nome}}</td> 
+			<td>{{contato.telefone}}</td>
+		</tr>
+	</table>
+	<form>
+	<input type="text" ng-model="contato.nome" placeholder="Nome" />
+	<input type="text" ng-model="contato.telefone" placeholder="Telefone" />
+	<button ng-click="adicionarContato(contato)"> Adicionar </button>
+	</form>
+</body>
+</html>
