@@ -1,0 +1,48 @@
+<!doctype html>
+
+<html lang="en" ng-app>
+<head>
+<title>Lista de compras</title>
+<meta charset="utf-8">
+
+<script src="angular.min.js"></script>
+<script src="controller.js"></script>
+
+
+</head>
+<body ng-controller="ListaComprasController">
+	<input type="text" ng-model="nome" />
+	<p>Olá, Tableless! Meu nome é: {{nome}}</p>
+
+
+
+
+
+	<form >
+		<input type="text" ng-model="item.produto"> <input
+			type="number" ng-model="item.quantidade">
+		<button ng-click="adicionaItem()">adicionar ítem</button>
+	</form>
+	
+	
+	
+	
+
+	<div >
+		<table>
+			<thead>
+				<tr>
+					<th>Produto</th>
+					<th>Quantidade</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in itens | filter:searchText">
+					<td><strong>{{ item.produto }}</strong></td>
+					<td>{{ item.quantidade }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
