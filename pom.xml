@@ -30,7 +30,7 @@
 		<spring.jpa.version>1.6.1.RELEASE</spring.jpa.version>
 		<hibernate.version>4.1.1.Final</hibernate.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<richfaces.version>4.1.0.Final</richfaces.version> 
+		<richfaces.version>4.1.0.Final</richfaces.version>
 	</properties>
 
 	<dependencies>
@@ -214,6 +214,12 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.7.1</version>
 		</dependency>
+		<dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+
 
 
 		<!-- Inclusão do Hibernate -->
@@ -282,7 +288,7 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.4</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<repositories>

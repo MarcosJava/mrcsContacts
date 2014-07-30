@@ -5,7 +5,8 @@ var app=angular.module("createUser",[]);
 		$scope.contatos;
 		
 		$scope.carregarContatos = function(){
-			var config = {headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}};
+			var config = {
+					headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}};
 			$http.get("/financeiro/view/teste/angularJson").success(function(data,status, config){
 				$scope.contatos = data;
 			}).error(function(data,status,config){

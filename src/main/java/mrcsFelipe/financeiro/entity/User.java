@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,6 +52,7 @@ public class User implements GrantedAuthority, java.io.Serializable {
 	private List<Account> account;
 	
 	@OneToMany(orphanRemoval=true, mappedBy="user",cascade={CascadeType.MERGE})
+	@JsonIgnore
 	private List<FinancialRelease> releases;
 	
 	public User() {
@@ -111,7 +114,7 @@ public class User implements GrantedAuthority, java.io.Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public List<Account> getAccount() {
 		return account;
 	}
@@ -120,7 +123,6 @@ public class User implements GrantedAuthority, java.io.Serializable {
 		this.account = account;
 	}
 	
-
 	public List<FinancialRelease> getReleases() {
 		return releases;
 	}
@@ -129,6 +131,57 @@ public class User implements GrantedAuthority, java.io.Serializable {
 
 	public void setReleases(List<FinancialRelease> releases) {
 		this.releases = releases;
+	}
+
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + (enabled ? 1231 : 1237);
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		return result;
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (enabled != other.enabled)
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (role != other.role)
+			return false;
+		return true;
 	}
 
 

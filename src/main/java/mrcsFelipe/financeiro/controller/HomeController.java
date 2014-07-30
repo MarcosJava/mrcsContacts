@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import mrcsFelipe.financeiro.entity.Account;
 import mrcsFelipe.financeiro.entity.FinancialRelease;
 import mrcsFelipe.financeiro.entity.User;
+import mrcsFelipe.financeiro.repository.UserRepository;
 import mrcsFelipe.financeiro.service.AccountService;
 import mrcsFelipe.financeiro.service.FinancialReleaseService;
 import mrcsFelipe.financeiro.service.UserService;
@@ -44,7 +45,8 @@ public class HomeController {
 	@Autowired
 	private FinancialReleaseService financialReleaseService;
 	
-	private Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	@Autowired
+	private UserRepository repository;
 	
 	
 	/******
@@ -61,11 +63,15 @@ public class HomeController {
 	@RequestMapping(value="/view/teste/angularJson", 
 					method=RequestMethod.GET, 
 					produces="application/json")
-	public @ResponseBody List<UserVO> topicosUsuarioJson(){
+	public @ResponseBody List<User> topicosUsuarioJson(){
 		
-		List<User> lstUser = userService.findAll();
+		//List<User> lstUser = userService.findAll();
+		List<User> lstUser = repository.findAllMoreAccount();
+		
 		List<UserVO> lstUserVO = new ArrayList<UserVO>();
+		
 		for (User user : lstUser) {
+			
 			UserVO userVO = new UserVO();
 			userVO.setId(user.getId());
 			userVO.setEmail(user.getEmail());
@@ -79,7 +85,7 @@ public class HomeController {
 		
 		
 		System.out.println("OIEE");
-		return lstUserVO;
+		return lstUser;
 	}
 	
 	
@@ -124,14 +130,14 @@ public class HomeController {
         	
         
         	
-        	List<Account> accounts = this.accountService.findAll(this.auth.getName());
-    		List<FinancialRelease> releases = this.financialReleaseService.findAllReleaseByUser(this.auth.getName());
+        	List<Account> accounts =  accountService.findAll(auth.getName());
+    		List<FinancialRelease> releases =  financialReleaseService.findAllReleaseByUser(auth.getName());
     		
     		
     		//Getting total em cada Account -- Total dos lançamentos + do start da conta
     		for(int i = 0 ; i < accounts.size() ; i++){
     			Integer id = accounts.get(i).getId();
-    			BigDecimal total = this.accountService.totalInAccount(id);
+    			BigDecimal total =  accountService.totalInAccount(id);
     			if(total == null){
     				total = accounts.get(i).getAmountStart();
     			}
@@ -139,16 +145,16 @@ public class HomeController {
     		}
     		
     		//Getting Total Amount Start
-    		BigDecimal totalAmountStartAllAccount = this.accountService.amountStartTotalAllAccount(this.auth.getName());
+    		BigDecimal totalAmountStartAllAccount =  accountService.amountStartTotalAllAccount( auth.getName());
     		
     		//Getting Everytotal Amount + Release 
-    		BigDecimal totalAllAccountAndRelease = this.accountService.totalAllAccountAndRelease(this.auth.getName());
+    		BigDecimal totalAllAccountAndRelease =  accountService.totalAllAccountAndRelease( auth.getName());
     		
     		//Total Release for User
-    		BigDecimal totalReleaseByUser = this.financialReleaseService.totalReleaseByUser(this.auth.getName());
+    		BigDecimal totalReleaseByUser =  financialReleaseService.totalReleaseByUser( auth.getName());
     		
     		//Getting User
-    		User user = this.userService.findByEmail(this.auth.getName());
+    		User user =  userService.findByEmail( auth.getName());
     		
     		view.setViewName("user/home");
     		Map<String, Object> maps = new HashMap<String, Object>();
@@ -220,12 +226,12 @@ public class HomeController {
 	@RequestMapping(value="/user/accounts", method=RequestMethod.GET)
 	public ModelAndView lstAccount(){
 		
-		
-		User user  = userService.findByEmail(this.auth.getName());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user  = userService.findByEmail( auth.getName());
 		
 		ModelAndView mav = new ModelAndView("user/accounts");
 		Map<String, Object> modelMap = new HashMap<String, Object>();
-		modelMap.put("lstAccount", accountService.findAll(this.auth.getName()));
+		modelMap.put("lstAccount", accountService.findAll( auth.getName()));
 		mav.addAllObjects(modelMap);
 		return mav ;
 	}
@@ -239,11 +245,11 @@ public class HomeController {
 	
 	@RequestMapping(value="user/createRelease")
 	public ModelAndView createRelease(){
-		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		ModelAndView view = new ModelAndView("user/createRelease");
 		
 		Map<String, Object> modelView = new HashMap<String, Object>();
-		modelView.put("accounts", accountService.findAll(this.auth.getName()));		
+		modelView.put("accounts", accountService.findAll( auth.getName()));		
 		view.addAllObjects(modelView);
 		
 		return view;
@@ -256,8 +262,8 @@ public class HomeController {
 	 *********************************************************************/
 	@RequestMapping("user/perfil")
 	public ModelAndView perfil(){
-		
-		User user = this.userService.findByEmail(this.auth.getName());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user =  userService.findByEmail( auth.getName());
 		
 		ModelAndView view = new ModelAndView("user/perfil");
 		Map<String, Object> maps = new HashMap<String, Object>();

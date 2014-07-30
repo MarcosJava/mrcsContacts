@@ -107,7 +107,7 @@
 	    	</font>
 	    </c:if>
 	    
-	    <c:if test="${account.total == 0 }">
+	    <c:if test="${account.total eq 0}">
 	    	R$ 0,00	
 	    </c:if>
 <hr />

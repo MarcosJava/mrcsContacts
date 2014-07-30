@@ -5,6 +5,7 @@
 <title>Servico Json</title>
 <script src="angular.min.js"></script>
 <script src="json.js"></script>
+<style> .selecionadoCss{background-color: red;}</style>
 </head>
 <body ng-controller="createUserCtrl">
 <form>
@@ -22,12 +23,12 @@
 	<table ng-show="contatos.length > 0">
 		
 		<tr>
-			<th></th><th>Nome</th><th>Telefone</th><th>Operadora</th>
+			<th>Nome</th><th>id</th><th>email</th>
 		</tr>
-		<tr ng-class="{selecionadoCss: contato.selecionado}"  ng-repeat="contato in contatos">
-			<td><input type="checkbox" ng-model="contato.selecionado" /></td>
+		<tr ng-class="{selecionadoCss: !contato.enable}"  ng-repeat="contato in contatos">
+
 			<td>{{contato.name}}</td> 
-			<td>{{contato.password}}</td>
+			<td>{{contato.id}}</td>
 			<td>{{contato.email}}</td>
 		</tr>
 	</table>
