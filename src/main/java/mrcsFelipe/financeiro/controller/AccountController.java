@@ -103,11 +103,26 @@ public class AccountController {
 	@RequestMapping(value="user/account/update",method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView updateAccountRetrieve(@Valid Account account,
 											  BindingResult bindingResult,
-											  String dateCreate){
+											  String dateCreate,
+											  String amountStart){
 		
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
 		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");	
+		
+		
+		if(amountStart.trim().equals("")){
+			amountStart = "0";
+		}
+		
+		
+		//Retirando os pontos e virgulas do dinheiro
+		String valuePart = amountStart.replace(".", "");
+		valuePart = valuePart.replace(",", ".");
+		
+		account.setAmountStart(new BigDecimal(valuePart));
+		
 		ModelAndView view = new ModelAndView("user/accounts");
 		Map<String, Object> map = new HashMap<String, Object>();
 		

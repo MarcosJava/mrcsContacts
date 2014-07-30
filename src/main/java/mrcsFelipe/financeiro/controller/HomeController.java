@@ -147,11 +147,12 @@ public class HomeController {
     		//Getting Total Amount Start
     		BigDecimal totalAmountStartAllAccount =  accountService.amountStartTotalAllAccount( auth.getName());
     		
-    		//Getting Everytotal Amount + Release 
-    		BigDecimal totalAllAccountAndRelease =  accountService.totalAllAccountAndRelease( auth.getName());
-    		
     		//Total Release for User
     		BigDecimal totalReleaseByUser =  financialReleaseService.totalReleaseByUser( auth.getName());
+    		
+    		
+    		//Getting Everytotal Amount + Release 
+    		BigDecimal totalAllAccountAndRelease =  totalAmountStartAllAccount.add(totalReleaseByUser);
     		
     		//Getting User
     		User user =  userService.findByEmail( auth.getName());

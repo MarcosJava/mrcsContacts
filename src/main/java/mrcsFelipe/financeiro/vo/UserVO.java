@@ -12,11 +12,12 @@ public class UserVO {
 	}
 
 	public UserVO(int id, String name, String email, boolean enable) {
-		super();
+		
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.enable = enable;
+		
 	}
 
 	public int getId() {

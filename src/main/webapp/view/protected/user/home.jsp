@@ -91,7 +91,7 @@
 	 	&nbsp;&nbsp;&nbsp;&nbsp;
 	 
 	 
-	 <c:if test="${account.total > 0}">
+	 <c:if test="${account.total >= 0}">
 	    	<font color="blue">
 	    		<fmt:formatNumber value="${account.total}" 
 	    						  currencySymbol="R$" 
@@ -107,9 +107,6 @@
 	    	</font>
 	    </c:if>
 	    
-	    <c:if test="${account.total eq 0}">
-	    	R$ 0,00	
-	    </c:if>
 <hr />
 	</c:forEach>
 
@@ -156,7 +153,7 @@
 	    </font>
 	 </c:if>
 	    
-	 <c:if test="${totalStartAmount < 0}">
+	 <c:if test="${totalReleaseAccount < 0}">
 	    <font color="red">
 	    	<fmt:formatNumber value="${totalReleaseAccount}" 
  					  currencySymbol="R$" 
@@ -182,7 +179,7 @@
 	    </font>
 	 </c:if>
 	    
-	 <c:if test="${totalStartAmount < 0}">
+	 <c:if test="${totalReleaseByUser < 0}">
 	    <font color="red">
 	    	<fmt:formatNumber value="${totalReleaseByUser}" 
  					  currencySymbol="R$" 

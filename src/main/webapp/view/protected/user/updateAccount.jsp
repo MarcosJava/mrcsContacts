@@ -35,9 +35,9 @@
 
 		
 		<div class="input-group">
-			<label for="inputAmount" class="control-label col-xs-2">
+			<label for="currency" class="control-label col-xs-2">
 				Valor: </label>
-            <sf:input path="amountStart" class="form-control" id="inputAmount" />
+            <sf:input path="amountStart" class="form-control" id="currency" />
         </div>
         <br />
         
