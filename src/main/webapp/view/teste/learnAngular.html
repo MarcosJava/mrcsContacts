@@ -1,28 +1,38 @@
 <!doctype html>
+
+<!--  AQUI HTML MARI =]  -->
+
 <html ng-app="listaTelefonica">
 <head>
-<meta charset="UTF-8">
 <title>Insert title here</title>
 <title>Lista de compras</title>
 <meta charset="utf-8">
 <script src="angular.min.js"></script>
 <script src="lista.js"></script>
+<style> .selecionadoCss{font-weight: bold; background-color: #FAFAD2;} </style>
 </head>
 <body ng-controller="listaTelefonicaCtrl">
 	<h1>{{titulo}}</h1>
-	<table>
+	<p  ng-show="contatos.length < 5"> Não tem mais de 5 </p>
+	<table ng-show="contatos.length > 0">
+		
 		<tr>
-			<th>Nome</th><th>Telefone</th>
+			<th></th><th>Nome</th><th>Telefone</th><th>Operadora</th>
 		</tr>
-		<tr ng-repeat="contato in contatos">
+		<tr ng-class="{selecionadoCss: contato.selecionado}"  ng-repeat="contato in contatos">
+			<td><input type="checkbox" ng-model="contato.selecionado" /></td>
 			<td>{{contato.nome}}</td> 
 			<td>{{contato.telefone}}</td>
+			<td>{{contato.operadora}}</td>
 		</tr>
 	</table>
 	<form>
 	<input type="text" ng-model="contato.nome" placeholder="Nome" />
 	<input type="text" ng-model="contato.telefone" placeholder="Telefone" />
-	<button ng-click="adicionarContato(contato)"> Adicionar </button>
+	<select ng-model="contato.operadora" ng-options="operadora for operadora in operadoras">
+	
+	</select>
+	<button ng-click="adicionarContato(contato)" ng-disabled="!(contato.nome && contato.telefone)"> Adicionar </button>
 	</form>
 </body>
 </html>

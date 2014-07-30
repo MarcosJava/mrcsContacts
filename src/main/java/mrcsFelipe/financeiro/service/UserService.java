@@ -1,5 +1,7 @@
 package mrcsFelipe.financeiro.service;
 
+import java.util.List;
+
 import mrcsFelipe.financeiro.entity.User;
 import mrcsFelipe.financeiro.repository.UserRepository;
 
@@ -25,5 +27,9 @@ public class UserService {
     public void delete(User user){
     	userRepository.delete(user);
     }
+    public List<User> findAll(){
+    	return (List<User>) this.userRepository.findAll();
+    }
+    
     
 }

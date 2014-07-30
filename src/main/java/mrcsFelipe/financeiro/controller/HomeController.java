@@ -1,6 +1,7 @@
 package mrcsFelipe.financeiro.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,12 +15,16 @@ import mrcsFelipe.financeiro.service.AccountService;
 import mrcsFelipe.financeiro.service.FinancialReleaseService;
 import mrcsFelipe.financeiro.service.UserService;
 import mrcsFelipe.financeiro.vo.AccountsListVO;
+import mrcsFelipe.financeiro.vo.UserVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,21 +46,64 @@ public class HomeController {
 	
 	private Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	
+	
+	/******
+	 * 
+	 * 
+	 * Um area de teste aqui =] 
+	 * 
+	 * 
+	 */
+	
 
+	//	GET DO JSON SERVICO 
 	
-	
-	@RequestMapping(value="/services/accounts", method=RequestMethod.GET,headers="Accept=application/json")
-	public @ResponseBody AccountsListVO topicosUsuarioJson(){
+	@RequestMapping(value="/view/teste/angularJson", 
+					method=RequestMethod.GET, 
+					produces="application/json")
+	public @ResponseBody List<UserVO> topicosUsuarioJson(){
 		
+		List<User> lstUser = userService.findAll();
+		List<UserVO> lstUserVO = new ArrayList<UserVO>();
+		for (User user : lstUser) {
+			UserVO userVO = new UserVO();
+			userVO.setId(user.getId());
+			userVO.setEmail(user.getEmail());
+			userVO.setEnable(user.isEnabled());
+			userVO.setName(user.getName());
+			lstUserVO.add(userVO);
+		}
 		
 		List<Account> accounts = accountService.findAll("marcos@gmail.com");
 		AccountsListVO accountsVO = new AccountsListVO(0, 0, accounts);
 		
 		
 		System.out.println("OIEE");
-		
-		return accountsVO;
+		return lstUserVO;
 	}
+	
+	
+	
+	// POST PARA CREATER COM JSON -- SERVICO 
+	
+	@RequestMapping(value="/services/accounts/", method=RequestMethod.POST, produces ="application/json")
+	public ResponseEntity<?> createUser(@ModelAttribute("user")UserVO user){
+		try {
+			System.out.println(user.getName());
+			return new ResponseEntity<User>(HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<User>(HttpStatus.FORBIDDEN);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
