@@ -22,7 +22,7 @@
 <p> <strong style="color:#00ABFF;">Seu nome :</strong>${user.name } </p> 
 <p> <strong style="color:#00ABFF;">Seu e-mail :</strong>${user.email } </p> 
 
- <a href="#">alterar senha</a>
+ <a href="/financeiro/user/update" data-target="#confirmUpdate" >alterar senha</a>
 
  </div>
 

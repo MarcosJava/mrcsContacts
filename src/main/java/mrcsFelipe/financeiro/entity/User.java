@@ -14,9 +14,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
@@ -52,7 +49,6 @@ public class User implements GrantedAuthority, java.io.Serializable {
 	private List<Account> account;
 	
 	@OneToMany(orphanRemoval=true, mappedBy="user",cascade={CascadeType.MERGE})
-	@JsonIgnore
 	private List<FinancialRelease> releases;
 	
 	public User() {

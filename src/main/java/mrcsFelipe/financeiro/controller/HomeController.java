@@ -19,20 +19,20 @@ import mrcsFelipe.financeiro.vo.AccountsListVO;
 import mrcsFelipe.financeiro.vo.UserVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+@Transactional
 @Controller
-@Scope("request")
 public class HomeController {
 	
 	
@@ -116,61 +116,84 @@ public class HomeController {
 	//Redirect
 	@RequestMapping("/")
     public ModelAndView redirect(){
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(auth.getAuthorities());
 		
+	
+		Authentication auth = 
+				SecurityContextHolder.getContext().getAuthentication();
+		
+	    //List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(auth.getAuthorities());
+			
 		ModelAndView view = new ModelAndView();
-		
-		if (auth.getName().equals("anonymousUser")) {
-			view.setViewName("login");
+		view.setViewName("user/home");
+		try {	
+			
+			if (auth.getName().equals("anonymousUser")) {
+				view.setViewName("login");
+				return view;
+			}
+			
+	        if(!auth.getName().equals(" ") ||
+	        	auth.getName() != null){
+	        
+	        	
+	        	List<Account> accounts =  accountService.findAll(auth.getName());
+	        	
+	    		List<FinancialRelease> releases =  
+	    				financialReleaseService.findAllReleaseByUser(auth.getName());
+	    		
+	    		
+	    		//Getting total em cada Account -- Total dos lançamentos + do start da conta
+	    		for(int i = 0 ; i < accounts.size() ; i++){
+	    			Integer id = accounts.get(i).getId();
+	    			BigDecimal total =  accountService.totalInAccount(id);
+	    			if(total == null){
+	    				total = accounts.get(i).getAmountStart();
+	    			}
+	    			accounts.get(i).setTotal(total);
+	    		}
+	    		
+	    		//Getting Total Amount Start
+	    		BigDecimal totalAmountStartAllAccount = 
+	    				accountService.amountStartTotalAllAccount(auth.getName());
+	    		
+	    		//Total Release for User
+	    		BigDecimal totalReleaseByUser = 
+	    				financialReleaseService.totalReleaseByUser( auth.getName());
+	    		
+	    		if(totalAmountStartAllAccount == null){
+	    			totalAmountStartAllAccount  = new BigDecimal(0);
+	    		}
+	    		if(totalReleaseByUser == null){
+	    			totalReleaseByUser = new BigDecimal(0);
+	    		}
+	    		
+	    		//Getting Everytotal Amount + Release 
+	    		BigDecimal totalAllAccountAndRelease = 
+	    				totalAmountStartAllAccount.add(totalReleaseByUser);
+	    		
+	    		//Getting User
+	    		User user =  userService.findByEmail( auth.getName());
+	    		
+	    		
+	    		Map<String, Object> maps = new HashMap<String, Object>();
+	    		maps.put("user", user);
+	    		maps.put("accounts", accounts );
+	    		maps.put("releases",releases );
+	    		maps.put("totalStartAmount", totalAmountStartAllAccount);
+	    		maps.put("totalReleaseAccount", totalAllAccountAndRelease);
+	    		maps.put("totalReleaseByUser", totalReleaseByUser );
+	    		view.addAllObjects(maps);
+	    		return view;
+
+	        }
+			
+		} catch (Exception e) {
 			return view;
 		}
 		
-        if(!auth.getName().equals(" ") || auth.getName() != null){
-        	
+		
         
-        	
-        	List<Account> accounts =  accountService.findAll(auth.getName());
-    		List<FinancialRelease> releases =  financialReleaseService.findAllReleaseByUser(auth.getName());
-    		
-    		
-    		//Getting total em cada Account -- Total dos lançamentos + do start da conta
-    		for(int i = 0 ; i < accounts.size() ; i++){
-    			Integer id = accounts.get(i).getId();
-    			BigDecimal total =  accountService.totalInAccount(id);
-    			if(total == null){
-    				total = accounts.get(i).getAmountStart();
-    			}
-    			accounts.get(i).setTotal(total);
-    		}
-    		
-    		//Getting Total Amount Start
-    		BigDecimal totalAmountStartAllAccount =  accountService.amountStartTotalAllAccount( auth.getName());
-    		
-    		//Total Release for User
-    		BigDecimal totalReleaseByUser =  financialReleaseService.totalReleaseByUser( auth.getName());
-    		
-    		
-    		//Getting Everytotal Amount + Release 
-    		BigDecimal totalAllAccountAndRelease =  totalAmountStartAllAccount.add(totalReleaseByUser);
-    		
-    		//Getting User
-    		User user =  userService.findByEmail( auth.getName());
-    		
-    		view.setViewName("user/home");
-    		Map<String, Object> maps = new HashMap<String, Object>();
-    		maps.put("user", user);
-    		maps.put("accounts", accounts );
-    		maps.put("releases",releases );
-    		maps.put("totalStartAmount", totalAmountStartAllAccount);
-    		maps.put("totalReleaseAccount", totalAllAccountAndRelease);
-    		maps.put("totalReleaseByUser", totalReleaseByUser );
-    		view.addAllObjects(maps);
-    		return view;
-
-        }
-        
-        return null;
+		return view;
  
     }
 	

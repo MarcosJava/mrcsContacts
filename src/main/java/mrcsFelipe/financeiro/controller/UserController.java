@@ -235,15 +235,17 @@ public class UserController {
 	 * EDITAR SENHA -- USUARIO LOGADO 
 	 * 
 	 */
-	@RequestMapping(value="", method={RequestMethod.POST})
-	public ModelAndView changePassword(){
+	@RequestMapping(value="/user/update", method={RequestMethod.POST})
+	public ModelAndView changePassword(@RequestParam("newPassword")String password){
 		
 		ModelAndView view = new ModelAndView();
 		
-		view.setViewName("/");
+		view.setViewName("user/update");
 		
 		return view; 
 	}
+	
+	
 	
 	
 }

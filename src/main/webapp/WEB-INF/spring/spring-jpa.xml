@@ -25,17 +25,27 @@
 
 	
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
-
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+ 
+    
 
     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    
+    <!-- JPA Config -->
+    <bean id="entityManagerFactory" 
+    	  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceProviderClass" value="org.hibernate.ejb.HibernatePersistence"/>
         <property name="dataSource" ref="myContactDataSource"/>
         <property name="persistenceUnitName" value="mrcsFinanceiroPU"/>
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
     </bean>
+	
+	<!-- Configure transaction by spring -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+  		<property name="entityManagerFactory" ref="entityManagerFactory"/>  
+    </bean>
+    
+	<!-- Use Annotation @Transaction -->
+	<tx:annotation-driven/>
 	
 	<!-- JPA Template -->
 <!-- 	<bean class="org.springFramework.orm.jpa.LocalEntityManagerFactoryBean"> -->

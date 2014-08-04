@@ -95,5 +95,10 @@
     	<put-attribute name="bodymain" value="/view/protected/user/releaseForDate.jsp"/>
     </definition>
     
+    <definition name="update" extends="main">
+    	<put-attribute name="header" value="/view/templates/header.jsp"/>
+    	<put-attribute name="bodymain" value="/view/protected/user/releaseForDate.jsp"/>
+    </definition>
+    
     
 </tiles-definitions>

@@ -52,7 +52,7 @@
 	 		&nbsp;&nbsp;&nbsp; 
 	
 	 			
-	 	<c:if test="${(account.total-account.amountStart) > 0}">
+	 	<c:if test="${(account.total-account.amountStart) >= 0}">
 	    	<font color="blue"> 
 	    		<fmt:formatNumber value="${account.total-account.amountStart}" 
 	 					      currencySymbol="R$" 
@@ -171,7 +171,7 @@
  		Valor total de todos os lançamentos:
  	</strong> 
  	
- 	<c:if test="${totalReleaseByUser > 0}">
+ 	<c:if test="${totalReleaseByUser >= 0}">
  	 	<font color="blue">
 	    	<fmt:formatNumber value="${totalReleaseByUser}" 
  					  currencySymbol="R$" 
